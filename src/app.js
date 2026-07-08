@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const routes = require('./routes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
@@ -38,8 +39,8 @@ app.get('/health', (req, res) => {
 });
 
 // ── API routes ────────────────────────────────────────────
-// Feature routers (auth, users, artisans, designs, ...) will be
-// mounted under /api here as we build each module.
+// Feature routers are mounted under /api. Auth is the first module.
+app.use('/api', routes);
 
 // ── Error handling (must be registered last) ──────────────
 app.use(notFound);
