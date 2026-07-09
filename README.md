@@ -2,7 +2,7 @@
 
 Backend for **Vastra AI**, an AI-powered textile design platform. Built with Node.js, Express, and MongoDB on an MVC architecture. The AI image-generation service is a **separate Django REST Framework** app that communicates with this backend over REST.
 
-> **Status:** Foundation + Authentication. Being built module by module — Materials, Designs, Artisan profiles, and AI integration come in later steps.
+> **Status:** Foundation + Authentication + Materials. Being built module by module — Designs, Artisan profiles, and AI integration come in later steps.
 
 ## Tech Stack
 
@@ -31,12 +31,15 @@ vastra/
     │   ├── db.js                 # MongoDB connection
     │   └── roles.js              # Role constants (brand/artisan/admin)
     ├── models/
-    │   └── User.js               # User schema + bcrypt hashing
+    │   ├── User.js               # User schema + bcrypt hashing
+    │   └── Material.js           # Material schema + validation
     ├── controllers/
-    │   └── authController.js     # signup / login / me / admin handlers
+    │   ├── authController.js     # signup / login / me / admin handlers
+    │   └── materialController.js # Material CRUD handlers
     ├── routes/
     │   ├── index.js              # Mounts feature routers under /api
-    │   └── authRoutes.js         # /api/auth endpoints
+    │   ├── authRoutes.js         # /api/auth endpoints
+    │   └── materialRoutes.js     # /api/materials endpoints
     ├── middleware/
     │   ├── authMiddleware.js     # protect (JWT) + authorize (RBAC)
     │   └── errorMiddleware.js    # 404 + centralized error handler
@@ -77,6 +80,42 @@ curl -X POST http://localhost:5000/api/auth/login \
 
 # Current user (protected)
 curl http://localhost:5000/api/auth/me -H "Authorization: Bearer <token>"
+```
+
+## Materials
+
+Fabric catalogue. Reads are public; creating/updating/deleting is restricted to **Brand** (owner) and **Admin** roles. Artisans can browse but not manage the catalogue.
+
+| Method | Endpoint              | Access               | Description                           |
+|--------|-----------------------|----------------------|---------------------------------------|
+| GET    | `/api/materials`      | Public               | List materials (filter/search/paged)  |
+| GET    | `/api/materials/:id`  | Public               | Get one material                      |
+| POST   | `/api/materials`      | Brand, Admin         | Create a material                     |
+| PUT    | `/api/materials/:id`  | Owner Brand, Admin   | Update a material                     |
+| DELETE | `/api/materials/:id`  | Owner Brand, Admin   | Delete a material                     |
+
+**List query params:** `category`, `isAvailable` (`true`/`false`), `search` (name, case-insensitive), `page`, `limit` (max 100).
+
+**Categories:** `Cotton`, `Silk`, `Linen`, `Wool`, `Rayon`, `Polyester`, `Denim`, `Velvet`, `Other`.
+
+```bash
+# Create (Brand/Admin)
+curl -X POST http://localhost:5000/api/materials \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "materialName": "Organic Cotton",
+    "category": "Cotton",
+    "pricePerMeter": 12.5,
+    "stockQuantity": 100,
+    "colorOptions": ["White", "Beige"],
+    "supplierName": "EcoLoom",
+    "countryOfOrigin": "India",
+    "sustainabilityRating": 5
+  }'
+
+# Browse (public)
+curl "http://localhost:5000/api/materials?category=Cotton&isAvailable=true&page=1&limit=20"
 ```
 
 ## Getting Started

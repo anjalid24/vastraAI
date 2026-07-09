@@ -1,10 +1,11 @@
 const express = require('express');
 const authRoutes = require('./authRoutes');
+const materialRoutes = require('./materialRoutes');
 
 const router = express.Router();
 
-// Feature routers are mounted here. Only auth exists for now; future
-// modules (users, artisans, designs, ...) will be added alongside it.
+// Feature routers are mounted here. New modules are added alongside auth.
 router.use('/auth', authRoutes);
+router.use('/materials', materialRoutes);
 
 module.exports = router;
