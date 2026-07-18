@@ -1,0 +1,277 @@
+/* ============================================================
+   Vastra AI — Design Theme
+   A modern palette inspired by Indian textiles, layered on top
+   of Bootstrap 5. Import order (see main.jsx):
+     1. bootstrap CSS   2. this file (overrides + tokens)
+   ============================================================ */
+
+:root {
+  /* Brand palette */
+  --v-indigo: #1e3a8a;
+  --v-indigo-600: #2743a0;
+  --v-indigo-700: #182f6f;
+  --v-saffron: #f59e0b;
+  --v-saffron-600: #d98806;
+  --v-emerald: #10b981;
+  --v-emerald-600: #0e9f70;
+  --v-bg: #f8f5f2;
+  --v-surface: #ffffff;
+  --v-ink: #1f2430;
+  --v-muted: #6b7280;
+  --v-line: #ece7e1;
+
+  /* Typography */
+  --v-font-head: 'Poppins', system-ui, sans-serif;
+  --v-font-body: 'Inter', system-ui, sans-serif;
+
+  /* Shape & depth */
+  --v-radius: 16px;
+  --v-radius-sm: 10px;
+  --v-shadow-sm: 0 1px 3px rgba(31, 36, 48, 0.06), 0 1px 2px rgba(31, 36, 48, 0.04);
+  --v-shadow: 0 10px 30px -12px rgba(30, 58, 138, 0.18);
+  --v-shadow-lg: 0 24px 60px -20px rgba(30, 58, 138, 0.28);
+
+  /* Map Bootstrap's theming variables onto our palette */
+  --bs-primary: var(--v-indigo);
+  --bs-primary-rgb: 30, 58, 138;
+  --bs-body-bg: var(--v-bg);
+  --bs-body-color: var(--v-ink);
+  --bs-body-font-family: var(--v-font-body);
+  --bs-border-radius: var(--v-radius-sm);
+  --bs-link-color: var(--v-indigo);
+  --bs-link-hover-color: var(--v-indigo-700);
+}
+
+body {
+  font-family: var(--v-font-body);
+  background-color: var(--v-bg);
+  color: var(--v-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--v-font-head);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.display-1, .display-2, .display-3, .display-4, .display-5 {
+  font-family: var(--v-font-head);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Decorative background wash used behind hero sections ---- */
+.v-weave-bg {
+  background:
+    radial-gradient(1200px 500px at 12% -10%, rgba(30, 58, 138, 0.10), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(245, 158, 11, 0.12), transparent 55%),
+    radial-gradient(700px 500px at 60% 120%, rgba(16, 185, 129, 0.10), transparent 60%),
+    var(--v-bg);
+}
+
+.v-thread-line {
+  height: 4px;
+  width: 64px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--v-indigo), var(--v-saffron), var(--v-emerald));
+}
+
+/* ---- Buttons ---- */
+.btn {
+  font-family: var(--v-font-head);
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.55rem 1.35rem;
+}
+.btn-primary {
+  --bs-btn-bg: var(--v-indigo);
+  --bs-btn-border-color: var(--v-indigo);
+  --bs-btn-hover-bg: var(--v-indigo-700);
+  --bs-btn-hover-border-color: var(--v-indigo-700);
+  --bs-btn-active-bg: var(--v-indigo-700);
+  --bs-btn-disabled-bg: var(--v-indigo);
+  --bs-btn-disabled-border-color: var(--v-indigo);
+}
+.btn-saffron {
+  --bs-btn-color: #3a2a05;
+  --bs-btn-bg: var(--v-saffron);
+  --bs-btn-border-color: var(--v-saffron);
+  --bs-btn-hover-color: #3a2a05;
+  --bs-btn-hover-bg: var(--v-saffron-600);
+  --bs-btn-hover-border-color: var(--v-saffron-600);
+  color: #3a2a05;
+}
+.btn-emerald {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--v-emerald);
+  --bs-btn-border-color: var(--v-emerald);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--v-emerald-600);
+  --bs-btn-hover-border-color: var(--v-emerald-600);
+  color: #fff;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--v-indigo);
+  --bs-btn-border-color: var(--v-indigo);
+  --bs-btn-hover-bg: var(--v-indigo);
+  --bs-btn-hover-border-color: var(--v-indigo);
+}
+
+/* ---- Cards & surfaces ---- */
+.v-card {
+  background: var(--v-surface);
+  border: 1px solid var(--v-line);
+  border-radius: var(--v-radius);
+  box-shadow: var(--v-shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.v-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--v-shadow);
+  border-color: rgba(30, 58, 138, 0.25);
+}
+
+.v-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--v-font-head);
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(30, 58, 138, 0.08);
+  color: var(--v-indigo);
+}
+.v-chip-saffron { background: rgba(245, 158, 11, 0.14); color: var(--v-saffron-600); }
+.v-chip-emerald { background: rgba(16, 185, 129, 0.14); color: var(--v-emerald-600); }
+
+.v-eyebrow {
+  font-family: var(--v-font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  color: var(--v-saffron-600);
+}
+
+.text-indigo { color: var(--v-indigo) !important; }
+.text-saffron { color: var(--v-saffron-600) !important; }
+.text-emerald { color: var(--v-emerald-600) !important; }
+.text-muted-2 { color: var(--v-muted) !important; }
+.bg-indigo { background-color: var(--v-indigo) !important; }
+.bg-cream { background-color: var(--v-bg) !important; }
+
+/* Soft feature-icon badge */
+.v-icon-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+  background: rgba(30, 58, 138, 0.08);
+  color: var(--v-indigo);
+}
+
+/* ---- Navbar ---- */
+.v-navbar {
+  background: rgba(248, 245, 242, 0.85);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--v-line);
+}
+.v-brand {
+  font-family: var(--v-font-head);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--v-indigo);
+}
+.v-navbar .nav-link {
+  font-family: var(--v-font-head);
+  font-weight: 600;
+  color: var(--v-ink);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem !important;
+}
+.v-navbar .nav-link:hover { color: var(--v-indigo); }
+.v-navbar .nav-link.active {
+  color: var(--v-indigo);
+  background: rgba(30, 58, 138, 0.09);
+}
+
+/* ---- Dashboard sidebar ---- */
+.v-sidebar {
+  background: var(--v-surface);
+  border-right: 1px solid var(--v-line);
+  min-height: calc(100vh - 66px);
+}
+.v-sidebar .nav-link {
+  color: var(--v-ink);
+  font-family: var(--v-font-head);
+  font-weight: 600;
+  border-radius: var(--v-radius-sm);
+  margin-bottom: 4px;
+}
+.v-sidebar .nav-link:hover { background: rgba(30, 58, 138, 0.06); }
+.v-sidebar .nav-link.active { background: var(--v-indigo); color: #fff; }
+
+/* ---- Studio panels ---- */
+.v-panel {
+  background: var(--v-surface);
+  border: 1px solid var(--v-line);
+  border-radius: var(--v-radius);
+  box-shadow: var(--v-shadow-sm);
+}
+.v-canvas {
+  background:
+    linear-gradient(45deg, #efeae4 25%, transparent 25%),
+    linear-gradient(-45deg, #efeae4 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #efeae4 75%),
+    linear-gradient(-45deg, transparent 75%, #efeae4 75%);
+  background-size: 22px 22px;
+  background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+  background-color: #f4f0ea;
+  border-radius: var(--v-radius);
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+}
+
+.v-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--v-line);
+  display: inline-block;
+}
+
+.v-selectable {
+  cursor: pointer;
+  border: 1.5px solid var(--v-line);
+  border-radius: var(--v-radius-sm);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.v-selectable:hover { border-color: rgba(30, 58, 138, 0.4); }
+.v-selectable.selected {
+  border-color: var(--v-indigo);
+  background: rgba(30, 58, 138, 0.06);
+}
+
+/* ---- Footer ---- */
+.v-footer {
+  background: #16213e;
+  color: #cdd3e6;
+}
+.v-footer a { color: #cdd3e6; text-decoration: none; }
+.v-footer a:hover { color: #fff; }
+
+/* ---- Utility ---- */
+.v-section { padding: 4.5rem 0; }
+.v-min-vh { min-height: calc(100vh - 66px); }
+.hover-lift { transition: transform .18s ease, box-shadow .18s ease; }
+.hover-lift:hover { transform: translateY(-3px); box-shadow: var(--v-shadow); }
+.v-cursor { cursor: pointer; }
+.object-cover { object-fit: cover; }
