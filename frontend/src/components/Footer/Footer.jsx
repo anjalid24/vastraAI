@@ -37,7 +37,7 @@ export default function Footer() {
       <div className="container pt-5 position-relative">
         <div className="row g-4">
           <div className="col-lg-4">
-            <div className="v-brand fs-3 mb-1" style={{ color: '#f7efe1' }}>Vastra AI</div>
+            <div className="v-brand fs-3 mb-1" style={{ color: '#fdf6f4' }}>Vastra AI</div>
             <div className="text-gold mb-2" style={{ fontFamily: 'var(--v-font-head)', letterSpacing: '.1em' }}>
               वस्त्र · कारीगर · परंपरा
             </div>

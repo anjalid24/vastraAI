@@ -31,7 +31,7 @@ function Hero() {
   return (
     <section className="v-weave-bg position-relative overflow-hidden">
       <Mandala size={420} className="position-absolute" style={{ top: -120, right: -110, pointerEvents: 'none' }} />
-      <Mandala size={260} color="#a6234c" opacity={0.08} className="position-absolute d-none d-lg-block"
+      <Mandala size={260} color="#d96d91" opacity={0.08} className="position-absolute d-none d-lg-block"
         style={{ bottom: -80, left: -70, pointerEvents: 'none' }} />
       <div className="container py-5 position-relative">
         <div className="row align-items-center g-5 py-lg-4">
@@ -367,13 +367,13 @@ function CtaBanner() {
     <section className="v-section">
       <div className="container">
         <div className="rounded-4 p-5 text-center position-relative overflow-hidden" style={{
-          background: 'radial-gradient(120% 130% at 85% 0%, #a6234c 0%, #1b2a6b 60%)',
-          color: '#f7efe1', boxShadow: 'inset 0 0 0 1px rgba(201,162,75,.5)',
+          background: 'radial-gradient(120% 130% at 85% 0%, #d96d91 0%, #5e8b4a 60%)',
+          color: '#fdf6f4', boxShadow: 'inset 0 0 0 1px rgba(199,168,94,.5)',
         }}>
           <Mandala size={320} color="#c9a24b" opacity={0.12} className="position-absolute"
             style={{ top: -110, left: -70, pointerEvents: 'none' }} />
           <div className="text-gold mb-2 position-relative" style={{ fontFamily: 'var(--v-font-head)', letterSpacing: '.12em' }}>शुभारंभ</div>
-          <h2 className="display-5 mb-2 position-relative" style={{ color: '#f7efe1' }}>Ready to weave something new?</h2>
+          <h2 className="display-5 mb-2 position-relative" style={{ color: '#fdf6f4' }}>Ready to weave something new?</h2>
           <p className="lead mb-4 position-relative" style={{ color: 'rgba(247,239,225,.75)' }}>Join Vastra AI and start designing with heritage on your side.</p>
           <div className="d-flex gap-3 justify-content-center flex-wrap">
             <Link to="/register" className="btn btn-saffron btn-lg">Create free account</Link>

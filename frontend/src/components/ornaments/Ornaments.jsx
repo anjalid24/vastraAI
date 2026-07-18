@@ -39,9 +39,9 @@ function stampSvg(color, bg = 'none') {
 /* A stamped floral rule used to separate sections. `tone` picks the ink. */
 export function BlockPrintDivider({ tone = 'gold', className = '', style }) {
   const color = {
-    gold: '#a97c2f', indigo: '#1b2a6b', rani: '#a6234c', terracotta: '#c1502e',
+    gold: '#a2843c', indigo: '#5e8b4a', rani: '#d96d91', terracotta: '#d98a86',
     cream: '#e6d5b6',
-  }[tone] || '#a97c2f';
+  }[tone] || '#a2843c';
   return (
     <div
       className={`v-blockprint ${className}`}
@@ -76,7 +76,7 @@ export function Paisley({ size = 22, color = 'currentColor', className = '' }) {
 }
 
 /* A faint concentric mandala for backgrounds / corners. */
-export function Mandala({ size = 260, color = '#a97c2f', opacity = 0.12, className = '', style }) {
+export function Mandala({ size = 260, color = '#a2843c', opacity = 0.12, className = '', style }) {
   const petals = Array.from({ length: 16 }, (_, i) => {
     const a = (i * 360) / 16;
     return (

@@ -12,15 +12,15 @@ export default function AuthLayout({ title, subtitle, children, wide = false }) 
       <div className="row v-min-vh">
         {/* Brand / heritage panel */}
         <div className="col-lg-5 d-none d-lg-flex flex-column justify-content-between p-5 position-relative overflow-hidden"
-          style={{ background: 'radial-gradient(140% 120% at 15% 0%, #a6234c 0%, #1b2a6b 55%, #14205a 100%)', color: '#f7efe1' }}>
+          style={{ background: 'radial-gradient(140% 120% at 15% 0%, #d96d91 0%, #5e8b4a 55%, #4c7539 100%)', color: '#fdf6f4' }}>
           <Mandala size={360} color="#c9a24b" opacity={0.14} className="position-absolute"
             style={{ top: -100, right: -90, pointerEvents: 'none' }} />
-          <Link to="/" className="v-brand fs-2 text-decoration-none position-relative" style={{ color: '#f7efe1' }}>
+          <Link to="/" className="v-brand fs-2 text-decoration-none position-relative" style={{ color: '#fdf6f4' }}>
             Vastra AI
             <span className="d-block text-gold" style={{ fontSize: '.8rem', letterSpacing: '.3em', fontFamily: 'var(--v-font-body)', fontWeight: 700 }}>वस्त्र</span>
           </Link>
           <div className="position-relative">
-            <h2 className="display-5 mb-3" style={{ color: '#f7efe1' }}>Design India's textile heritage, reimagined by AI.</h2>
+            <h2 className="display-5 mb-3" style={{ color: '#fdf6f4' }}>Design India's textile heritage, reimagined by AI.</h2>
             <p style={{ color: 'rgba(247,239,225,.72)' }}>Bandhani, Ikat and Patola — authentic patterns, colours and
               materials at your fingertips.</p>
             <div className="row g-3 mt-2" style={{ maxWidth: 380 }}>
