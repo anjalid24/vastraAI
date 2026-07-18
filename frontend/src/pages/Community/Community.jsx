@@ -38,6 +38,7 @@ export default function Community() {
     <>
       <PageHeader
         eyebrow="Community"
+        deva="समुदाय"
         title="Share your craft, celebrate the community"
         lead="Post your designs, learn from artisans and brands, and keep India's textile traditions alive."
         actions={<Button variant="primary" onClick={() => setShowCreate(true)}>＋ Create post</Button>}

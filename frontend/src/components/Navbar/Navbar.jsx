@@ -26,21 +26,29 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg v-navbar sticky-top py-2">
       <div className="container">
-        <Link className="navbar-brand v-brand fs-4 d-flex align-items-center gap-2" to="/">
+        <Link className="navbar-brand v-brand fs-3 d-flex align-items-center gap-2" to="/">
           <span
-            className="d-inline-grid rounded-3"
+            className="d-inline-grid"
             style={{
-              width: 34,
-              height: 34,
+              width: 38,
+              height: 38,
               placeItems: 'center',
-              background: 'linear-gradient(135deg,#1e3a8a,#f59e0b)',
-              color: '#fff',
-              fontWeight: 800,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle at 30% 25%, #a6234c, #1b2a6b 70%)',
+              color: '#f7efe1',
+              fontFamily: 'var(--v-font-head)',
+              fontSize: '1.25rem',
+              boxShadow: 'inset 0 0 0 1.5px var(--v-gold)',
             }}
           >
             व
           </span>
-          Vastra&nbsp;AI
+          <span className="lh-1">
+            Vastra&nbsp;AI
+            <span className="d-block text-gold" style={{ fontFamily: 'var(--v-font-body)', fontSize: '.62rem', letterSpacing: '.28em', fontWeight: 700 }}>
+              वस्त्र
+            </span>
+          </span>
         </Link>
 
         <button

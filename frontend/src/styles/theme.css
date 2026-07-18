@@ -1,90 +1,127 @@
 /* ============================================================
-   Vastra AI — Design Theme
-   A modern palette inspired by Indian textiles, layered on top
-   of Bootstrap 5. Import order (see main.jsx):
-     1. bootstrap CSS   2. this file (overrides + tokens)
+   Vastra AI — Design Theme  ·  "Desi Royal"
+   Warm parchment ground, jewel-tone palette, gold hairlines,
+   bilingual Devanagari display type, and folk-art ornament
+   (temple arches + block-print borders). Layered on Bootstrap 5.
+   Import order (main.jsx): 1. bootstrap  2. this file.
    ============================================================ */
 
 :root {
-  /* Brand palette */
-  --v-indigo: #1e3a8a;
-  --v-indigo-600: #2743a0;
-  --v-indigo-700: #182f6f;
-  --v-saffron: #f59e0b;
-  --v-saffron-600: #d98806;
-  --v-emerald: #10b981;
-  --v-emerald-600: #0e9f70;
-  --v-bg: #f8f5f2;
-  --v-surface: #ffffff;
-  --v-ink: #1f2430;
-  --v-muted: #6b7280;
-  --v-line: #ece7e1;
+  /* ---- Jewel palette (named for their craft origins) ---- */
+  --v-parchment: #f7efe1;   /* haldi cream ground        */
+  --v-parchment-2: #f1e5cf; /* deeper panel / sunken     */
+  --v-surface: #fffaf1;     /* raised card surface       */
+  --v-indigo: #1b2a6b;      /* neel — royal indigo       */
+  --v-indigo-700: #14205a;
+  --v-rani: #a6234c;        /* rani pink — royal magenta */
+  --v-rani-700: #841a3c;
+  --v-terracotta: #c1502e;  /* geru — earthen rust       */
+  --v-marigold: #e8a33d;    /* haldi gold — marigold     */
+  --v-marigold-700: #c9832a;
+  --v-emerald: #1f7a5a;     /* zumurrud — deep emerald   */
+  --v-emerald-700: #17603f;
+  --v-gold: #c9a24b;        /* gold leaf accent          */
+  --v-gold-deep: #a97c2f;
+  --v-ink: #3a2a1e;         /* warm brown ink (not black)*/
+  --v-muted: #7a6552;       /* muted brown               */
+  --v-line: #e6d5b6;        /* warm gold hairline        */
 
-  /* Typography */
-  --v-font-head: 'Poppins', system-ui, sans-serif;
-  --v-font-body: 'Inter', system-ui, sans-serif;
+  /* Back-compat aliases for earlier token names used inline in a few files */
+  --v-saffron: var(--v-marigold);
+  --v-saffron-600: var(--v-marigold-700);
+  --v-emerald-600: var(--v-emerald-700);
+  --v-indigo-600: var(--v-indigo-700);
 
-  /* Shape & depth */
-  --v-radius: 16px;
-  --v-radius-sm: 10px;
-  --v-shadow-sm: 0 1px 3px rgba(31, 36, 48, 0.06), 0 1px 2px rgba(31, 36, 48, 0.04);
-  --v-shadow: 0 10px 30px -12px rgba(30, 58, 138, 0.18);
-  --v-shadow-lg: 0 24px 60px -20px rgba(30, 58, 138, 0.28);
+  /* ---- Typography ---- */
+  --v-font-head: 'Rozha One', 'Mukta', Georgia, serif;
+  --v-font-body: 'Mukta', system-ui, -apple-system, sans-serif;
 
-  /* Map Bootstrap's theming variables onto our palette */
+  /* ---- Shape & depth ---- */
+  --v-radius: 14px;
+  --v-radius-sm: 9px;
+  --v-shadow-sm: 0 1px 2px rgba(58, 42, 30, 0.06), 0 2px 8px rgba(58, 42, 30, 0.05);
+  --v-shadow: 0 14px 34px -16px rgba(27, 42, 107, 0.30);
+  --v-shadow-lg: 0 30px 70px -26px rgba(27, 42, 107, 0.40);
+
+  /* Bootstrap variable overrides */
   --bs-primary: var(--v-indigo);
-  --bs-primary-rgb: 30, 58, 138;
-  --bs-body-bg: var(--v-bg);
+  --bs-primary-rgb: 27, 42, 107;
+  --bs-body-bg: var(--v-parchment);
   --bs-body-color: var(--v-ink);
   --bs-body-font-family: var(--v-font-body);
   --bs-border-radius: var(--v-radius-sm);
+  --bs-border-color: var(--v-line);
   --bs-link-color: var(--v-indigo);
-  --bs-link-hover-color: var(--v-indigo-700);
+  --bs-link-hover-color: var(--v-rani);
+  --bs-emphasis-color: var(--v-ink);
 }
 
+/* Subtle woven-paper texture on the whole ground */
 body {
   font-family: var(--v-font-body);
-  background-color: var(--v-bg);
   color: var(--v-ink);
+  background-color: var(--v-parchment);
+  background-image:
+    radial-gradient(rgba(169, 124, 47, 0.05) 1px, transparent 1.4px),
+    radial-gradient(rgba(169, 124, 47, 0.04) 1px, transparent 1.4px);
+  background-size: 22px 22px, 22px 22px;
+  background-position: 0 0, 11px 11px;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.005em;
 }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: var(--v-font-head);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-weight: 400;      /* Rozha One is single-weight; its contrast is the weight */
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  color: var(--v-ink);
 }
-
-.display-1, .display-2, .display-3, .display-4, .display-5 {
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
   font-family: var(--v-font-head);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
+p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-font-body); }
+.lead { font-weight: 400; }
 
-/* ---- Decorative background wash used behind hero sections ---- */
+/* ---- Decorative hero wash (parchment + jewel light) ---- */
 .v-weave-bg {
   background:
-    radial-gradient(1200px 500px at 12% -10%, rgba(30, 58, 138, 0.10), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(245, 158, 11, 0.12), transparent 55%),
-    radial-gradient(700px 500px at 60% 120%, rgba(16, 185, 129, 0.10), transparent 60%),
-    var(--v-bg);
+    radial-gradient(900px 460px at 8% -10%, rgba(27, 42, 107, 0.12), transparent 60%),
+    radial-gradient(760px 420px at 100% 0%, rgba(232, 163, 61, 0.20), transparent 58%),
+    radial-gradient(680px 460px at 55% 120%, rgba(166, 35, 76, 0.12), transparent 60%),
+    var(--v-parchment);
+  background-color: var(--v-parchment);
 }
 
+/* Gold gradient hairline used as a regal divider */
 .v-thread-line {
-  height: 4px;
-  width: 64px;
+  height: 3px;
+  width: 72px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--v-indigo), var(--v-saffron), var(--v-emerald));
+  background: linear-gradient(90deg, var(--v-gold-deep), var(--v-marigold), var(--v-rani));
+}
+
+/* Block-print (ठप्पा) repeating border — a stamped floral rule.
+   Used as a section divider via the <BlockPrintDivider/> component. */
+.v-blockprint {
+  height: 26px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: 0.8;
 }
 
 /* ---- Buttons ---- */
 .btn {
-  font-family: var(--v-font-head);
+  font-family: var(--v-font-body);
   font-weight: 600;
-  border-radius: 999px;
-  padding: 0.55rem 1.35rem;
+  border-radius: 10px;
+  padding: 0.58rem 1.4rem;
+  letter-spacing: 0.01em;
 }
+.btn-lg { border-radius: 12px; }
 .btn-primary {
   --bs-btn-bg: var(--v-indigo);
   --bs-btn-border-color: var(--v-indigo);
@@ -93,31 +130,43 @@ h1, h2, h3, h4, h5, h6,
   --bs-btn-active-bg: var(--v-indigo-700);
   --bs-btn-disabled-bg: var(--v-indigo);
   --bs-btn-disabled-border-color: var(--v-indigo);
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 75, 0.35);
 }
 .btn-saffron {
-  --bs-btn-color: #3a2a05;
-  --bs-btn-bg: var(--v-saffron);
-  --bs-btn-border-color: var(--v-saffron);
-  --bs-btn-hover-color: #3a2a05;
-  --bs-btn-hover-bg: var(--v-saffron-600);
-  --bs-btn-hover-border-color: var(--v-saffron-600);
-  color: #3a2a05;
+  --bs-btn-color: #3a2405;
+  --bs-btn-bg: var(--v-marigold);
+  --bs-btn-border-color: var(--v-marigold);
+  --bs-btn-hover-color: #3a2405;
+  --bs-btn-hover-bg: var(--v-marigold-700);
+  --bs-btn-hover-border-color: var(--v-marigold-700);
+  color: #3a2405;
 }
 .btn-emerald {
   --bs-btn-color: #fff;
   --bs-btn-bg: var(--v-emerald);
   --bs-btn-border-color: var(--v-emerald);
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: var(--v-emerald-600);
-  --bs-btn-hover-border-color: var(--v-emerald-600);
+  --bs-btn-hover-bg: var(--v-emerald-700);
+  --bs-btn-hover-border-color: var(--v-emerald-700);
+  color: #fff;
+}
+.btn-rani {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--v-rani);
+  --bs-btn-border-color: var(--v-rani);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--v-rani-700);
+  --bs-btn-hover-border-color: var(--v-rani-700);
   color: #fff;
 }
 .btn-outline-primary {
   --bs-btn-color: var(--v-indigo);
-  --bs-btn-border-color: var(--v-indigo);
+  --bs-btn-border-color: var(--v-gold-deep);
   --bs-btn-hover-bg: var(--v-indigo);
   --bs-btn-hover-border-color: var(--v-indigo);
+  --bs-btn-hover-color: #fff;
 }
+.btn-outline-light { --bs-btn-border-color: rgba(255,255,255,.6); }
 
 /* ---- Cards & surfaces ---- */
 .v-card {
@@ -125,83 +174,114 @@ h1, h2, h3, h4, h5, h6,
   border: 1px solid var(--v-line);
   border-radius: var(--v-radius);
   box-shadow: var(--v-shadow-sm);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .v-card-hover:hover {
   transform: translateY(-4px);
   box-shadow: var(--v-shadow);
-  border-color: rgba(30, 58, 138, 0.25);
+  border-color: var(--v-gold);
 }
 
+/* Chips read like enamel/meenakari tags */
 .v-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--v-font-head);
+  font-family: var(--v-font-body);
   font-weight: 600;
-  font-size: 0.78rem;
-  padding: 0.28rem 0.7rem;
+  font-size: 0.76rem;
+  padding: 0.28rem 0.72rem;
   border-radius: 999px;
-  background: rgba(30, 58, 138, 0.08);
+  background: rgba(27, 42, 107, 0.09);
   color: var(--v-indigo);
+  border: 1px solid rgba(27, 42, 107, 0.14);
 }
-.v-chip-saffron { background: rgba(245, 158, 11, 0.14); color: var(--v-saffron-600); }
-.v-chip-emerald { background: rgba(16, 185, 129, 0.14); color: var(--v-emerald-600); }
+.v-chip-saffron { background: rgba(232, 163, 61, 0.18); color: var(--v-marigold-700); border-color: rgba(201, 131, 42, 0.3); }
+.v-chip-emerald { background: rgba(31, 122, 90, 0.14); color: var(--v-emerald-700); border-color: rgba(31, 122, 90, 0.25); }
+.v-chip-rani { background: rgba(166, 35, 76, 0.12); color: var(--v-rani); border-color: rgba(166, 35, 76, 0.25); }
 
+/* Bilingual eyebrow — Devanagari + Latin, gold, lettered wide */
 .v-eyebrow {
-  font-family: var(--v-font-head);
+  font-family: var(--v-font-body);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.75rem;
-  color: var(--v-saffron-600);
+  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  color: var(--v-gold-deep);
+}
+.v-eyebrow .deva {
+  font-family: var(--v-font-head);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--v-rani);
+  margin-right: 0.5rem;
+  font-size: 1.05rem;
+  vertical-align: -0.05em;
 }
 
 .text-indigo { color: var(--v-indigo) !important; }
-.text-saffron { color: var(--v-saffron-600) !important; }
-.text-emerald { color: var(--v-emerald-600) !important; }
+.text-saffron { color: var(--v-marigold-700) !important; }
+.text-emerald { color: var(--v-emerald-700) !important; }
+.text-rani { color: var(--v-rani) !important; }
+.text-gold { color: var(--v-gold-deep) !important; }
 .text-muted-2 { color: var(--v-muted) !important; }
 .bg-indigo { background-color: var(--v-indigo) !important; }
-.bg-cream { background-color: var(--v-bg) !important; }
+.bg-cream { background-color: var(--v-parchment-2) !important; }
 
-/* Soft feature-icon badge */
+/* Feature icon set in a gold-ringed medallion */
 .v-icon-badge {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
   display: grid;
   place-items: center;
   font-size: 1.4rem;
-  background: rgba(30, 58, 138, 0.08);
+  background: rgba(27, 42, 107, 0.08);
   color: var(--v-indigo);
+  box-shadow: inset 0 0 0 1.5px rgba(201, 162, 75, 0.5);
+}
+
+/* ---- Temple arch (jharokha) frame — the signature motif ---- */
+.v-arch {
+  position: relative;
+  border-radius: 46% 46% var(--v-radius) var(--v-radius) / 34% 34% var(--v-radius) var(--v-radius);
+  overflow: hidden;
+  border: 2px solid var(--v-gold);
+  box-shadow: var(--v-shadow), inset 0 0 0 4px rgba(255, 250, 241, 0.5);
+}
+.v-arch-outline {
+  border-radius: 46% 46% var(--v-radius-sm) var(--v-radius-sm) / 34% 34% var(--v-radius-sm) var(--v-radius-sm);
+  border: 1.5px solid var(--v-gold);
 }
 
 /* ---- Navbar ---- */
 .v-navbar {
-  background: rgba(248, 245, 242, 0.85);
-  backdrop-filter: saturate(140%) blur(10px);
+  background: rgba(247, 239, 225, 0.9);
+  backdrop-filter: saturate(150%) blur(10px);
   border-bottom: 1px solid var(--v-line);
+  box-shadow: 0 1px 0 rgba(201, 162, 75, 0.25);
 }
 .v-brand {
   font-family: var(--v-font-head);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
   color: var(--v-indigo);
 }
 .v-navbar .nav-link {
-  font-family: var(--v-font-head);
+  font-family: var(--v-font-body);
   font-weight: 600;
   color: var(--v-ink);
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 0.35rem 0.85rem !important;
 }
-.v-navbar .nav-link:hover { color: var(--v-indigo); }
+.v-navbar .nav-link:hover { color: var(--v-rani); }
 .v-navbar .nav-link.active {
   color: var(--v-indigo);
-  background: rgba(30, 58, 138, 0.09);
+  background: rgba(27, 42, 107, 0.09);
+  box-shadow: inset 0 -2px 0 var(--v-gold);
 }
 
-/* ---- Dashboard sidebar ---- */
+/* ---- Dashboard / admin sidebar ---- */
 .v-sidebar {
   background: var(--v-surface);
   border-right: 1px solid var(--v-line);
@@ -209,13 +289,14 @@ h1, h2, h3, h4, h5, h6,
 }
 .v-sidebar .nav-link {
   color: var(--v-ink);
-  font-family: var(--v-font-head);
+  font-family: var(--v-font-body);
   font-weight: 600;
   border-radius: var(--v-radius-sm);
   margin-bottom: 4px;
+  border: 1px solid transparent;
 }
-.v-sidebar .nav-link:hover { background: rgba(30, 58, 138, 0.06); }
-.v-sidebar .nav-link.active { background: var(--v-indigo); color: #fff; }
+.v-sidebar .nav-link:hover { background: rgba(27, 42, 107, 0.06); border-color: var(--v-line); }
+.v-sidebar .nav-link.active { background: var(--v-indigo); color: #fff; box-shadow: inset 0 0 0 1px rgba(201, 162, 75, 0.5); }
 
 /* ---- Studio panels ---- */
 .v-panel {
@@ -226,25 +307,26 @@ h1, h2, h3, h4, h5, h6,
 }
 .v-canvas {
   background:
-    linear-gradient(45deg, #efeae4 25%, transparent 25%),
-    linear-gradient(-45deg, #efeae4 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #efeae4 75%),
-    linear-gradient(-45deg, transparent 75%, #efeae4 75%);
+    linear-gradient(45deg, #eaddc4 25%, transparent 25%),
+    linear-gradient(-45deg, #eaddc4 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #eaddc4 75%),
+    linear-gradient(-45deg, transparent 75%, #eaddc4 75%);
   background-size: 22px 22px;
   background-position: 0 0, 0 11px, 11px -11px, -11px 0;
-  background-color: #f4f0ea;
+  background-color: #f2e8d4;
   border-radius: var(--v-radius);
   min-height: 360px;
   display: grid;
   place-items: center;
+  box-shadow: inset 0 0 0 1px var(--v-line);
 }
 
 .v-swatch {
   width: 26px;
   height: 26px;
-  border-radius: 8px;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px var(--v-line);
+  border-radius: 7px;
+  border: 2px solid var(--v-surface);
+  box-shadow: 0 0 0 1px var(--v-gold);
   display: inline-block;
 }
 
@@ -252,26 +334,50 @@ h1, h2, h3, h4, h5, h6,
   cursor: pointer;
   border: 1.5px solid var(--v-line);
   border-radius: var(--v-radius-sm);
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  color: var(--v-ink);
 }
-.v-selectable:hover { border-color: rgba(30, 58, 138, 0.4); }
+.v-selectable:hover { border-color: var(--v-gold); }
 .v-selectable.selected {
   border-color: var(--v-indigo);
-  background: rgba(30, 58, 138, 0.06);
+  background: rgba(27, 42, 107, 0.05);
+  box-shadow: inset 0 0 0 1px var(--v-indigo);
 }
 
 /* ---- Footer ---- */
 .v-footer {
-  background: #16213e;
-  color: #cdd3e6;
+  background: #17142b;
+  color: #d8cbb3;
+  border-top: 3px solid var(--v-gold);
 }
-.v-footer a { color: #cdd3e6; text-decoration: none; }
-.v-footer a:hover { color: #fff; }
+.v-footer a { color: #d8cbb3; text-decoration: none; }
+.v-footer a:hover { color: var(--v-marigold); }
 
 /* ---- Utility ---- */
 .v-section { padding: 4.5rem 0; }
 .v-min-vh { min-height: calc(100vh - 66px); }
-.hover-lift { transition: transform .18s ease, box-shadow .18s ease; }
+.hover-lift { transition: transform .2s ease, box-shadow .2s ease; }
 .hover-lift:hover { transform: translateY(-3px); box-shadow: var(--v-shadow); }
 .v-cursor { cursor: pointer; }
 .object-cover { object-fit: cover; }
+
+/* Keyboard focus — visible, gold, on brand */
+a:focus-visible, button:focus-visible, .btn:focus-visible,
+.form-control:focus, .form-select:focus, .v-selectable:focus-visible {
+  outline: 2px solid var(--v-gold);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+.form-control, .form-select { border-color: var(--v-line); background-color: var(--v-surface); }
+.form-control::placeholder { color: #ab9a86; }
+
+/* Gentle first-paint reveal for hero content */
+@keyframes vRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.v-rise { animation: vRise 0.7s cubic-bezier(.2,.7,.2,1) both; }
+.v-rise-2 { animation: vRise 0.7s cubic-bezier(.2,.7,.2,1) 0.12s both; }
+.v-rise-3 { animation: vRise 0.7s cubic-bezier(.2,.7,.2,1) 0.24s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .v-rise, .v-rise-2, .v-rise-3 { animation: none; }
+  .v-card, .v-card-hover, .hover-lift { transition: none; }
+}

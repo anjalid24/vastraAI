@@ -12,6 +12,7 @@ export default function Subscription() {
     <>
       <PageHeader
         eyebrow="Subscription"
+        deva="योजना"
         title="Choose the plan that fits your craft"
         lead="Start free and upgrade when you're ready to scale. No hidden charges."
       />

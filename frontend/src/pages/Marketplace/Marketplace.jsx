@@ -20,6 +20,7 @@ export default function Marketplace() {
     <>
       <PageHeader
         eyebrow="Artisan Marketplace"
+        deva="कारीगर"
         title="Commission India's master makers"
         lead="Discover skilled artisans across the country and bring your AI designs to life on real handlooms."
       />

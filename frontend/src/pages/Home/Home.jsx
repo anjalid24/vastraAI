@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import FeatureCard from '../../components/Cards/FeatureCard.jsx';
+import { Eyebrow, BlockPrintDivider, ArchArt, Mandala, Paisley } from '../../components/ornaments/Ornaments.jsx';
 import { HERITAGE, PATTERNS } from '../../data/heritage.js';
 import { ENCYCLOPEDIA } from '../../data/encyclopedia.js';
 import { COMMUNITY_POSTS } from '../../data/community.js';
@@ -28,34 +29,39 @@ export default function Home() {
 /* ---------------------------------------------------------------- Hero */
 function Hero() {
   return (
-    <section className="v-weave-bg">
-      <div className="container py-5">
+    <section className="v-weave-bg position-relative overflow-hidden">
+      <Mandala size={420} className="position-absolute" style={{ top: -120, right: -110, pointerEvents: 'none' }} />
+      <Mandala size={260} color="#a6234c" opacity={0.08} className="position-absolute d-none d-lg-block"
+        style={{ bottom: -80, left: -70, pointerEvents: 'none' }} />
+      <div className="container py-5 position-relative">
         <div className="row align-items-center g-5 py-lg-4">
           <div className="col-lg-6">
-            <span className="v-chip v-chip-saffron mb-3">🧵 Preserving India's textile heritage</span>
-            <h1 className="display-3 mb-3">
-              Design authentic <span className="text-indigo">Indian textiles</span> with AI
+            <span className="v-chip v-chip-saffron mb-3 v-rise">🧵 वस्त्र · Preserving India's textile heritage</span>
+            <h1 className="display-2 mb-3 v-rise">
+              Weave <span className="text-rani">heritage</span> into
+              every <span className="text-indigo">design</span>
             </h1>
-            <p className="lead text-muted-2 mb-4" style={{ maxWidth: 540 }}>
-              Generate Bandhani, Ikat and Patola designs in seconds, grounded in
-              real heritage. Match them to the right fabric, learn the craft, and
-              connect with the artisans who bring them to life.
+            <p className="lead text-muted-2 mb-4 v-rise-2" style={{ maxWidth: 540 }}>
+              Vastra AI generates Bandhani, Ikat and Patola in seconds — grounded in
+              real craft, matched to the right fabric, and tied to the artisans and
+              stories that keep these traditions alive.
             </p>
-            <div className="d-flex flex-wrap gap-3">
+            <div className="d-flex flex-wrap gap-3 v-rise-2">
               <Link to="/register" className="btn btn-primary btn-lg">Start designing free</Link>
-              <Link to="/studio" className="btn btn-outline-primary btn-lg">Open Design Studio</Link>
+              <Link to="/studio" className="btn btn-outline-primary btn-lg">Open the Studio</Link>
             </div>
-            <div className="d-flex flex-wrap gap-4 mt-4 text-muted-2">
+            <div className="d-flex flex-wrap gap-4 mt-4 text-muted-2 v-rise-3">
               <Stat n="3" label="Living craft traditions" />
               <Stat n="50+" label="Authentic motifs" />
               <Stat n="9" label="Fabric categories" />
             </div>
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6 v-rise-3">
             <HeroArtCard />
           </div>
         </div>
       </div>
+      <BlockPrintDivider tone="gold" />
     </section>
   );
 }
@@ -69,37 +75,42 @@ function Stat({ n, label }) {
   );
 }
 
-// A decorative "generated design" card built from heritage colours (no images
-// needed — keeps the landing page fast and offline-friendly).
+// A decorative "generated design" panel: three heritage patterns framed inside
+// a temple arch (the signature motif). Built from heritage colours — no images,
+// so the landing page stays fast and offline-friendly.
 function HeroArtCard() {
   return (
-    <div className="v-card p-3 shadow-lg" style={{ boxShadow: 'var(--v-shadow-lg)' }}>
-      <div className="row g-2">
-        {PATTERNS.map((p) => (
-          <div className="col-4" key={p}>
-            <div
-              className="rounded-3 d-flex align-items-end p-2 text-white"
-              style={{
-                aspectRatio: '3/4',
-                background: `linear-gradient(160deg, ${HERITAGE[p].colors[0].hex}, ${HERITAGE[p].colors[1].hex})`,
-                position: 'relative', overflow: 'hidden',
-              }}
-            >
-              <span className="small fw-semibold" style={{ zIndex: 1 }}>{p}</span>
-              <div style={{
-                position: 'absolute', inset: 0,
-                backgroundImage:
-                  'radial-gradient(circle, rgba(255,255,255,.5) 2px, transparent 3px)',
-                backgroundSize: '18px 18px', opacity: .5,
-              }} />
+    <div className="v-card p-3 p-sm-4" style={{ boxShadow: 'var(--v-shadow-lg)' }}>
+      <ArchArt>
+        <div className="row g-0" style={{ background: 'var(--v-parchment-2)' }}>
+          {PATTERNS.map((p) => (
+            <div className="col-4" key={p}>
+              <div
+                className="d-flex align-items-end p-2 text-white"
+                style={{
+                  aspectRatio: '3/4',
+                  background: `linear-gradient(160deg, ${HERITAGE[p].colors[0].hex}, ${HERITAGE[p].colors[1].hex})`,
+                  position: 'relative', overflow: 'hidden',
+                }}
+              >
+                <span className="small fw-semibold" style={{ zIndex: 1 }}>{p}</span>
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  backgroundImage: 'radial-gradient(circle, rgba(255,255,255,.55) 2px, transparent 3px)',
+                  backgroundSize: '18px 18px', opacity: .5,
+                }} />
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </ArchArt>
       <div className="d-flex align-items-center justify-content-between mt-3 px-1">
-        <div>
-          <div className="fw-semibold">AI Design Studio</div>
-          <div className="small text-muted-2">Bandhani · Ikat · Patola</div>
+        <div className="d-flex align-items-center gap-2">
+          <Paisley size={26} color="var(--v-gold-deep)" />
+          <div>
+            <div className="fw-semibold" style={{ fontFamily: 'var(--v-font-head)' }}>AI Design Studio</div>
+            <div className="small text-muted-2">Bandhani · Ikat · Patola</div>
+          </div>
         </div>
         <span className="v-chip v-chip-emerald">Authenticity 94%</span>
       </div>
@@ -114,9 +125,8 @@ function GeneratorPreview() {
       <div className="container">
         <div className="row align-items-center g-5">
           <div className="col-lg-6 order-lg-2">
-            <div className="v-thread-line mb-3" />
-            <span className="v-eyebrow">AI Design Generator</span>
-            <h2 className="display-6 my-2">From prompt to pattern, instantly</h2>
+            <Eyebrow deva="रचना">AI Design Generator</Eyebrow>
+            <h2 className="display-5 my-2">From prompt to pattern, in a breath</h2>
             <p className="text-muted-2 mb-4">
               Pick a heritage pattern and fabric, describe your vision, and let
               Vastra AI generate ready-to-use textile designs — complete with an
@@ -162,6 +172,7 @@ function TextileShowcase() {
     <section className="v-section bg-cream">
       <div className="container">
         <SectionHead
+          deva="परंपरा"
           eyebrow="Traditional textiles"
           title="Rooted in real craft traditions"
           lead="Every generation is grounded in centuries-old techniques and authentic palettes."
@@ -210,7 +221,7 @@ function WhyVastra() {
   return (
     <section className="v-section">
       <div className="container">
-        <SectionHead eyebrow="Why choose Vastra AI" title="Creativity meets craft, responsibly" />
+        <SectionHead deva="क्यों" eyebrow="Why choose Vastra AI" title="Creativity meets craft, responsibly" />
         <div className="row g-4">
           {items.map((it) => (
             <div className="col-md-6 col-lg-4" key={it.title}>
@@ -229,7 +240,7 @@ function FeaturedCommunity() {
   return (
     <section className="v-section bg-cream">
       <div className="container">
-        <SectionHead eyebrow="From the community" title="What creators are making"
+        <SectionHead deva="समुदाय" eyebrow="From the community" title="What creators are making"
           action={<Link to="/community" className="btn btn-outline-primary">View community</Link>} />
         <div className="row g-4">
           {posts.map((p) => (
@@ -264,7 +275,7 @@ function FeaturedArtisans() {
   return (
     <section className="v-section">
       <div className="container">
-        <SectionHead eyebrow="Featured artisans" title="Meet the makers"
+        <SectionHead deva="कारीगर" eyebrow="Featured artisans" title="Meet the makers"
           action={<Link to="/marketplace" className="btn btn-outline-primary">Explore marketplace</Link>} />
         <div className="row g-4">
           {artisans.map((a) => (
@@ -291,7 +302,7 @@ function EncyclopediaPreview() {
   return (
     <section className="v-section bg-cream">
       <div className="container">
-        <SectionHead eyebrow="Textile Encyclopedia" title="Learn the craft behind every thread"
+        <SectionHead deva="ज्ञानकोश" eyebrow="Textile Encyclopedia" title="Learn the craft behind every thread"
           action={<Link to="/encyclopedia" className="btn btn-outline-primary">Browse encyclopedia</Link>} />
         <div className="row g-4">
           {ENCYCLOPEDIA.map((a) => (
@@ -318,7 +329,7 @@ function PlansStrip() {
   return (
     <section className="v-section">
       <div className="container">
-        <SectionHead eyebrow="Subscription" title="Simple plans for every creator" />
+        <SectionHead deva="योजना" eyebrow="Subscription" title="Simple plans for every creator" />
         <div className="row g-4 justify-content-center">
           {PLANS.map((plan) => (
             <div className="col-md-6 col-lg-4" key={plan.id}>
@@ -355,11 +366,15 @@ function CtaBanner() {
   return (
     <section className="v-section">
       <div className="container">
-        <div className="rounded-4 p-5 text-center text-white" style={{
-          background: 'linear-gradient(135deg, var(--v-indigo), #3b1d6e)',
+        <div className="rounded-4 p-5 text-center position-relative overflow-hidden" style={{
+          background: 'radial-gradient(120% 130% at 85% 0%, #a6234c 0%, #1b2a6b 60%)',
+          color: '#f7efe1', boxShadow: 'inset 0 0 0 1px rgba(201,162,75,.5)',
         }}>
-          <h2 className="display-6 text-white mb-2">Ready to weave something new?</h2>
-          <p className="lead text-white-50 mb-4">Join Vastra AI and start designing with heritage on your side.</p>
+          <Mandala size={320} color="#c9a24b" opacity={0.12} className="position-absolute"
+            style={{ top: -110, left: -70, pointerEvents: 'none' }} />
+          <div className="text-gold mb-2 position-relative" style={{ fontFamily: 'var(--v-font-head)', letterSpacing: '.12em' }}>शुभारंभ</div>
+          <h2 className="display-5 mb-2 position-relative" style={{ color: '#f7efe1' }}>Ready to weave something new?</h2>
+          <p className="lead mb-4 position-relative" style={{ color: 'rgba(247,239,225,.75)' }}>Join Vastra AI and start designing with heritage on your side.</p>
           <div className="d-flex gap-3 justify-content-center flex-wrap">
             <Link to="/register" className="btn btn-saffron btn-lg">Create free account</Link>
             <Link to="/studio" className="btn btn-outline-light btn-lg">Explore the studio</Link>
@@ -371,12 +386,13 @@ function CtaBanner() {
 }
 
 /* --------------------------------------------------------- helpers */
-function SectionHead({ eyebrow, title, lead, action }) {
+function SectionHead({ eyebrow, deva, title, lead, action }) {
   return (
     <div className="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-4 gap-3">
       <div>
-        <span className="v-eyebrow">{eyebrow}</span>
-        <h2 className="display-6 mt-1 mb-1">{title}</h2>
+        <Eyebrow deva={deva}>{eyebrow}</Eyebrow>
+        <h2 className="display-5 mt-2 mb-2">{title}</h2>
+        <span className="v-thread-line d-block mb-2" />
         {lead && <p className="text-muted-2 mb-0" style={{ maxWidth: 560 }}>{lead}</p>}
       </div>
       {action}

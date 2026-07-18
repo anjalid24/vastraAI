@@ -19,6 +19,7 @@ export default function Encyclopedia() {
     <>
       <PageHeader
         eyebrow="Textile Encyclopedia"
+        deva="ज्ञानकोश"
         title="The stories woven into every craft"
         lead="Explore the history, technique, materials and motifs behind India's living textile traditions."
       />
