@@ -1,0 +1,58 @@
+// Subscription plan catalogue (placeholder until /api/subscriptions exists).
+// `role` links a plan to the backend account role it best maps to.
+export const PLANS = [
+  {
+    id: 'free',
+    name: 'Free',
+    price: 0,
+    cadence: 'forever',
+    role: 'brand',
+    highlight: false,
+    tagline: 'Explore Vastra AI',
+    features: [
+      { label: '1 AI generation / day', included: true },
+      { label: 'Community access', included: true },
+      { label: 'Textile Encyclopedia', included: true },
+      { label: 'Save designs', included: true },
+      { label: 'Pricing Calculator', included: false },
+      { label: 'Marketplace access', included: false },
+    ],
+    cta: 'Get started',
+  },
+  {
+    id: 'brand',
+    name: 'Brand',
+    price: 1499,
+    cadence: 'month',
+    role: 'brand',
+    highlight: true,
+    tagline: 'For labels & studios',
+    features: [
+      { label: 'Unlimited AI generation', included: true },
+      { label: 'Design history & versions', included: true },
+      { label: 'Pricing Calculator', included: true },
+      { label: 'Materials management', included: true },
+      { label: 'Full Marketplace access', included: true },
+      { label: 'Priority support', included: true },
+    ],
+    cta: 'Subscribe',
+  },
+  {
+    id: 'artisan',
+    name: 'Artisan',
+    price: 0,
+    cadence: 'forever',
+    role: 'artisan',
+    highlight: false,
+    tagline: 'For makers & weavers',
+    features: [
+      { label: 'Public portfolio', included: true },
+      { label: 'Receive brand requests', included: true },
+      { label: 'Community access', included: true },
+      { label: 'Earnings dashboard (soon)', included: false },
+      { label: 'Featured artisan slots', included: false },
+      { label: 'Pricing Calculator', included: false },
+    ],
+    cta: 'Join as artisan',
+  },
+];
