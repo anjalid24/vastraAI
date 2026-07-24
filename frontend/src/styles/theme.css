@@ -8,9 +8,9 @@
 
 :root {
   /* ---- Jewel palette (named for their craft origins) ---- */
-  --v-parchment: #faf4f1;   /* soft blush cream ground   */
-  --v-parchment-2: #eef3e4; /* soft pista panel / sunken */
-  --v-surface: #fffdfb;     /* raised card surface       */
+  --v-parchment: #f7efe1;   /* warm haldi parchment ground */
+  --v-parchment-2: #f3ebda; /* warm cream panel / sunken   */
+  --v-surface: #fffaf1;     /* warm raised card surface    */
   --v-indigo: #5e8b4a;      /* pista — primary green     */
   --v-indigo-700: #4c7539;
   --v-rani: #d96d91;        /* baby pink — deep rose     */
@@ -68,8 +68,8 @@ body {
   color: var(--v-ink);
   background-color: var(--v-parchment);
   background-image:
-    radial-gradient(rgba(94, 139, 74, 0.05) 1px, transparent 1.4px),
-    radial-gradient(rgba(217, 109, 145, 0.045) 1px, transparent 1.4px);
+    radial-gradient(rgba(169, 124, 47, 0.05) 1px, transparent 1.4px),
+    radial-gradient(rgba(169, 124, 47, 0.04) 1px, transparent 1.4px);
   background-size: 22px 22px, 22px 22px;
   background-position: 0 0, 11px 11px;
   -webkit-font-smoothing: antialiased;
@@ -95,9 +95,9 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
 /* ---- Decorative hero wash (parchment + jewel light) ---- */
 .v-weave-bg {
   background:
-    radial-gradient(900px 460px at 8% -10%, rgba(94, 139, 74, 0.12), transparent 60%),
-    radial-gradient(760px 420px at 100% 0%, rgba(233, 183, 92, 0.20), transparent 58%),
-    radial-gradient(680px 460px at 55% 120%, rgba(217, 109, 145, 0.12), transparent 60%),
+    radial-gradient(900px 460px at 8% -10%, rgba(27, 42, 107, 0.13), transparent 60%),   /* neel indigo */
+    radial-gradient(760px 420px at 100% 0%, rgba(232, 163, 61, 0.20), transparent 58%),   /* marigold gold */
+    radial-gradient(680px 460px at 55% 120%, rgba(166, 35, 76, 0.12), transparent 60%),   /* rani pink */
     var(--v-parchment);
   background-color: var(--v-parchment);
 }
@@ -352,11 +352,11 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
 
 /* ---- Footer ---- */
 .v-footer {
-  background: #33402f;               /* deep pista-olive to ground the pastels */
-  color: #d9e2ca;
+  background: #17142b;               /* deep royal navy to ground the palette */
+  color: #d8cbb3;
   border-top: 3px solid var(--v-gold);
 }
-.v-footer a { color: #d9e2ca; text-decoration: none; }
+.v-footer a { color: #d8cbb3; text-decoration: none; }
 .v-footer a:hover { color: #f7c9da; } /* baby-pink on hover */
 
 /* ---- Utility ---- */

@@ -34,7 +34,7 @@ export default function Navbar() {
               height: 38,
               placeItems: 'center',
               borderRadius: '50%',
-              background: 'radial-gradient(circle at 30% 25%, #d96d91, #5e8b4a 70%)',
+              background: 'radial-gradient(circle at 30% 25%, #a6234c, #1b2a6b 70%)',
               color: '#fdf6f4',
               fontFamily: 'var(--v-font-head)',
               fontSize: '1.25rem',

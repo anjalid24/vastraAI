@@ -31,7 +31,7 @@ function Hero() {
   return (
     <section className="v-weave-bg position-relative overflow-hidden">
       <Mandala size={420} className="position-absolute" style={{ top: -120, right: -110, pointerEvents: 'none' }} />
-      <Mandala size={260} color="#d96d91" opacity={0.08} className="position-absolute d-none d-lg-block"
+      <Mandala size={260} color="#1b2a6b" opacity={0.07} className="position-absolute d-none d-lg-block"
         style={{ bottom: -80, left: -70, pointerEvents: 'none' }} />
       <div className="container py-5 position-relative">
         <div className="row align-items-center g-5 py-lg-4">
@@ -367,7 +367,7 @@ function CtaBanner() {
     <section className="v-section">
       <div className="container">
         <div className="rounded-4 p-5 text-center position-relative overflow-hidden" style={{
-          background: 'radial-gradient(120% 130% at 85% 0%, #d96d91 0%, #5e8b4a 60%)',
+          background: 'radial-gradient(120% 130% at 85% 0%, #a6234c 0%, #1b2a6b 60%)',
           color: '#fdf6f4', boxShadow: 'inset 0 0 0 1px rgba(199,168,94,.5)',
         }}>
           <Mandala size={320} color="#c9a24b" opacity={0.12} className="position-absolute"

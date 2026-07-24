@@ -12,7 +12,7 @@ export default function AuthLayout({ title, subtitle, children, wide = false }) 
       <div className="row v-min-vh">
         {/* Brand / heritage panel */}
         <div className="col-lg-5 d-none d-lg-flex flex-column justify-content-between p-5 position-relative overflow-hidden"
-          style={{ background: 'radial-gradient(140% 120% at 15% 0%, #d96d91 0%, #5e8b4a 55%, #4c7539 100%)', color: '#fdf6f4' }}>
+          style={{ background: 'radial-gradient(140% 120% at 15% 0%, #a6234c 0%, #1b2a6b 55%, #14205a 100%)', color: '#fdf6f4' }}>
           <Mandala size={360} color="#c9a24b" opacity={0.14} className="position-absolute"
             style={{ top: -100, right: -90, pointerEvents: 'none' }} />
           <Link to="/" className="v-brand fs-2 text-decoration-none position-relative" style={{ color: '#fdf6f4' }}>
