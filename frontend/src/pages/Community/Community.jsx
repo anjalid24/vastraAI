@@ -6,6 +6,7 @@ import InputField from '../../components/Forms/InputField.jsx';
 import Button from '../../components/Buttons/Button.jsx';
 import communityService from '../../services/communityService.js';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { ARTISANS } from '../../data/artisans.js';
 import { ROLE_CHIP, ROLE_LABELS } from '../../utils/constants.js';
 import { initials, timeAgo } from '../../utils/formatters.js';
 
@@ -60,6 +61,8 @@ function PostCard({ post, onLike, onBookmark, onComment, canInteract }) {
   const [commentText, setCommentText] = useState('');
   const [showComments, setShowComments] = useState(false);
 
+  const artisan = ARTISANS.find((a) => a.name === post.author);
+
   const submitComment = (e) => {
     e.preventDefault();
     if (!commentText.trim()) return;
@@ -70,10 +73,19 @@ function PostCard({ post, onLike, onBookmark, onComment, canInteract }) {
   return (
     <div className="v-card p-4 mb-3">
       <div className="d-flex align-items-center gap-2 mb-3">
-        <span className="d-inline-grid rounded-circle text-white" style={{
-          width: 44, height: 44, placeItems: 'center', background: 'var(--v-indigo)', fontWeight: 700 }}>
-          {initials(post.author)}
-        </span>
+        {artisan?.image ? (
+          <img
+            src={artisan.image}
+            alt={post.author}
+            className="rounded-circle object-fit-cover flex-shrink-0"
+            style={{ width: 44, height: 44, border: '2px solid var(--v-gold)' }}
+          />
+        ) : (
+          <span className="d-inline-grid rounded-circle text-white" style={{
+            width: 44, height: 44, placeItems: 'center', background: 'var(--v-indigo)', fontWeight: 700 }}>
+            {initials(post.author)}
+          </span>
+        )}
         <div>
           <div className="fw-semibold">{post.author}</div>
           <div className="d-flex align-items-center gap-2">

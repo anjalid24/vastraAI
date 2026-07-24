@@ -25,14 +25,25 @@ export default function HeritagePanel({ pattern, onApplyColor, onApplyMaterial }
 
   return (
     <div className="v-panel overflow-hidden">
-      <div className="p-3 text-white" style={{
+      <div className="p-3 text-white position-relative overflow-hidden" style={{
+        minHeight: 110,
         background: `linear-gradient(135deg, ${h.colors[0].hex}, ${h.colors[2].hex})`,
       }}>
-        <div className="small text-white-50 text-uppercase" style={{ letterSpacing: '.12em' }}>
-          Heritage Inspiration
+        {h.image && (
+          <img
+            src={h.image}
+            alt={pattern}
+            className="position-absolute inset-0 w-100 h-100 object-fit-cover"
+            style={{ opacity: 0.35, mixBlendMode: 'luminosity' }}
+          />
+        )}
+        <div className="position-relative" style={{ zIndex: 1 }}>
+          <div className="small text-white-50 text-uppercase" style={{ letterSpacing: '.12em' }}>
+            Heritage Inspiration
+          </div>
+          <div className="h5 text-white mb-0">{pattern}</div>
+          <div className="small text-white-50">{h.tagline}</div>
         </div>
-        <div className="h5 text-white mb-0">{pattern}</div>
-        <div className="small text-white-50">{h.tagline}</div>
       </div>
 
       <div className="p-3">

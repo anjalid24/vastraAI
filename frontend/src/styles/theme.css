@@ -8,23 +8,35 @@
 
 :root {
   /* ---- Jewel palette (named for their craft origins) ---- */
-  --v-parchment: #f7efe1;   /* warm haldi parchment ground */
-  --v-parchment-2: #f3ebda; /* warm cream panel / sunken   */
-  --v-surface: #fffaf1;     /* warm raised card surface    */
-  --v-indigo: #5e8b4a;      /* pista — primary green     */
+  --v-parchment: #f7efe1;
+  /* warm haldi parchment ground */
+  --v-parchment-2: #f3ebda;
+  /* warm cream panel / sunken   */
+  --v-surface: #fffaf1;
+  /* warm raised card surface    */
+  --v-indigo: #5e8b4a;
+  /* pista — primary green     */
   --v-indigo-700: #4c7539;
-  --v-rani: #d96d91;        /* baby pink — deep rose     */
+  --v-rani: #d96d91;
+  /* baby pink — deep rose     */
   --v-rani-700: #c0567b;
-  --v-terracotta: #d98a86;  /* soft coral (minor accent) */
-  --v-marigold: #e9b75c;    /* soft gold (accent)        */
+  --v-terracotta: #d98a86;
+  /* soft coral (minor accent) */
+  --v-marigold: #e9b75c;
+  /* soft gold (accent)        */
   --v-marigold-700: #c4923a;
-  --v-emerald: #5fa07a;     /* soft green (variety)      */
+  --v-emerald: #5fa07a;
+  /* soft green (variety)      */
   --v-emerald-700: #4c8663;
-  --v-gold: #c7a85e;        /* soft gold-leaf accent     */
+  --v-gold: #c7a85e;
+  /* soft gold-leaf accent     */
   --v-gold-deep: #a2843c;
-  --v-ink: #3d2f38;         /* deep aubergine ink        */
-  --v-muted: #877581;       /* muted mauve               */
-  --v-line: #ead9dc;        /* soft blush hairline       */
+  --v-ink: #3d2f38;
+  /* deep aubergine ink        */
+  --v-muted: #877581;
+  /* muted mauve               */
+  --v-line: #ead9dc;
+  /* soft blush hairline       */
 
   /* Pastel fills for chips / soft surfaces */
   --v-pista-soft: #dceccb;
@@ -56,9 +68,11 @@
   --bs-border-radius: var(--v-radius-sm);
   --bs-border-color: var(--v-line);
   --bs-link-color: var(--v-indigo);
-  --bs-link-color-rgb: 94, 139, 74;        /* pista — Bootstrap colours links via rgb */
+  --bs-link-color-rgb: 94, 139, 74;
+  /* pista — Bootstrap colours links via rgb */
   --bs-link-hover-color: var(--v-rani);
-  --bs-link-hover-color-rgb: 217, 109, 145; /* baby pink on hover */
+  --bs-link-hover-color-rgb: 217, 109, 145;
+  /* baby pink on hover */
   --bs-emphasis-color: var(--v-ink);
 }
 
@@ -76,28 +90,61 @@ body {
   letter-spacing: 0.005em;
 }
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   font-family: var(--v-font-head);
-  font-weight: 400;      /* Rozha One is single-weight; its contrast is the weight */
+  font-weight: 400;
+  /* Rozha One is single-weight; its contrast is the weight */
   letter-spacing: 0.01em;
   line-height: 1.12;
   color: var(--v-ink);
 }
-.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
   font-family: var(--v-font-head);
   font-weight: 400;
   letter-spacing: 0.01em;
 }
-p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-font-body); }
-.lead { font-weight: 400; }
+
+p,
+li,
+label,
+input,
+select,
+textarea,
+.btn,
+.nav-link {
+  font-family: var(--v-font-body);
+}
+
+.lead {
+  font-weight: 400;
+}
 
 /* ---- Decorative hero wash (parchment + jewel light) ---- */
 .v-weave-bg {
   background:
-    radial-gradient(900px 460px at 8% -10%, rgba(27, 42, 107, 0.13), transparent 60%),   /* neel indigo */
-    radial-gradient(760px 420px at 100% 0%, rgba(232, 163, 61, 0.20), transparent 58%),   /* marigold gold */
-    radial-gradient(680px 460px at 55% 120%, rgba(166, 35, 76, 0.12), transparent 60%),   /* rani pink */
+    radial-gradient(900px 460px at 8% -10%, rgba(27, 42, 107, 0.13), transparent 60%),
+    /* neel indigo */
+    radial-gradient(760px 420px at 100% 0%, rgba(232, 163, 61, 0.20), transparent 58%),
+    /* marigold gold */
+    radial-gradient(680px 460px at 55% 120%, rgba(166, 35, 76, 0.12), transparent 60%),
+    /* rani pink */
     var(--v-parchment);
   background-color: var(--v-parchment);
 }
@@ -127,7 +174,11 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   padding: 0.58rem 1.4rem;
   letter-spacing: 0.01em;
 }
-.btn-lg { border-radius: 12px; }
+
+.btn-lg {
+  border-radius: 12px;
+}
+
 .btn-primary {
   --bs-btn-bg: var(--v-indigo);
   --bs-btn-border-color: var(--v-indigo);
@@ -138,6 +189,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   --bs-btn-disabled-border-color: var(--v-indigo);
   box-shadow: inset 0 0 0 1px rgba(199, 168, 94, 0.35);
 }
+
 .btn-saffron {
   --bs-btn-color: #3a2405;
   --bs-btn-bg: var(--v-marigold);
@@ -147,6 +199,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   --bs-btn-hover-border-color: var(--v-marigold-700);
   color: #3a2405;
 }
+
 .btn-emerald {
   --bs-btn-color: #fff;
   --bs-btn-bg: var(--v-emerald);
@@ -156,6 +209,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   --bs-btn-hover-border-color: var(--v-emerald-700);
   color: #fff;
 }
+
 .btn-rani {
   --bs-btn-color: #fff;
   --bs-btn-bg: var(--v-rani);
@@ -165,6 +219,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   --bs-btn-hover-border-color: var(--v-rani-700);
   color: #fff;
 }
+
 .btn-outline-primary {
   --bs-btn-color: var(--v-indigo);
   --bs-btn-border-color: var(--v-gold-deep);
@@ -172,7 +227,10 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   --bs-btn-hover-border-color: var(--v-indigo);
   --bs-btn-hover-color: #fff;
 }
-.btn-outline-light { --bs-btn-border-color: rgba(255,255,255,.6); }
+
+.btn-outline-light {
+  --bs-btn-border-color: rgba(255, 255, 255, .6);
+}
 
 /* ---- Cards & surfaces ---- */
 .v-card {
@@ -182,6 +240,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   box-shadow: var(--v-shadow-sm);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+
 .v-card-hover:hover {
   transform: translateY(-4px);
   box-shadow: var(--v-shadow);
@@ -202,9 +261,24 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   color: var(--v-indigo);
   border: 1px solid rgba(94, 139, 74, 0.14);
 }
-.v-chip-saffron { background: rgba(233, 183, 92, 0.18); color: var(--v-marigold-700); border-color: rgba(201, 131, 42, 0.3); }
-.v-chip-emerald { background: rgba(95, 160, 122, 0.14); color: var(--v-emerald-700); border-color: rgba(95, 160, 122, 0.25); }
-.v-chip-rani { background: rgba(217, 109, 145, 0.12); color: var(--v-rani); border-color: rgba(217, 109, 145, 0.25); }
+
+.v-chip-saffron {
+  background: rgba(233, 183, 92, 0.18);
+  color: var(--v-marigold-700);
+  border-color: rgba(201, 131, 42, 0.3);
+}
+
+.v-chip-emerald {
+  background: rgba(95, 160, 122, 0.14);
+  color: var(--v-emerald-700);
+  border-color: rgba(95, 160, 122, 0.25);
+}
+
+.v-chip-rani {
+  background: rgba(217, 109, 145, 0.12);
+  color: var(--v-rani);
+  border-color: rgba(217, 109, 145, 0.25);
+}
 
 /* Bilingual eyebrow — Devanagari + Latin, gold, lettered wide */
 .v-eyebrow {
@@ -215,6 +289,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   font-size: 0.72rem;
   color: var(--v-gold-deep);
 }
+
 .v-eyebrow .deva {
   font-family: var(--v-font-head);
   text-transform: none;
@@ -225,14 +300,37 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   vertical-align: -0.05em;
 }
 
-.text-indigo { color: var(--v-indigo) !important; }
-.text-saffron { color: var(--v-marigold-700) !important; }
-.text-emerald { color: var(--v-emerald-700) !important; }
-.text-rani { color: var(--v-rani) !important; }
-.text-gold { color: var(--v-gold-deep) !important; }
-.text-muted-2 { color: var(--v-muted) !important; }
-.bg-indigo { background-color: var(--v-indigo) !important; }
-.bg-cream { background-color: var(--v-parchment-2) !important; }
+.text-indigo {
+  color: var(--v-indigo) !important;
+}
+
+.text-saffron {
+  color: var(--v-marigold-700) !important;
+}
+
+.text-emerald {
+  color: var(--v-emerald-700) !important;
+}
+
+.text-rani {
+  color: var(--v-rani) !important;
+}
+
+.text-gold {
+  color: var(--v-gold-deep) !important;
+}
+
+.text-muted-2 {
+  color: var(--v-muted) !important;
+}
+
+.bg-indigo {
+  background-color: var(--v-indigo) !important;
+}
+
+.bg-cream {
+  background-color: var(--v-parchment-2) !important;
+}
 
 /* Feature icon set in a gold-ringed medallion */
 .v-icon-badge {
@@ -255,6 +353,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   border: 2px solid var(--v-gold);
   box-shadow: var(--v-shadow), inset 0 0 0 4px rgba(255, 250, 241, 0.5);
 }
+
 .v-arch-outline {
   border-radius: 46% 46% var(--v-radius-sm) var(--v-radius-sm) / 34% 34% var(--v-radius-sm) var(--v-radius-sm);
   border: 1.5px solid var(--v-gold);
@@ -267,12 +366,14 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   border-bottom: 1px solid var(--v-line);
   box-shadow: 0 1px 0 rgba(199, 168, 94, 0.25);
 }
+
 .v-brand {
   font-family: var(--v-font-head);
   font-weight: 400;
   letter-spacing: 0.01em;
   color: var(--v-indigo);
 }
+
 .v-navbar .nav-link {
   font-family: var(--v-font-body);
   font-weight: 600;
@@ -280,7 +381,11 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   border-radius: 8px;
   padding: 0.35rem 0.85rem !important;
 }
-.v-navbar .nav-link:hover { color: var(--v-rani); }
+
+.v-navbar .nav-link:hover {
+  color: var(--v-rani);
+}
+
 .v-navbar .nav-link.active {
   color: var(--v-indigo);
   background: rgba(94, 139, 74, 0.09);
@@ -293,6 +398,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   border-right: 1px solid var(--v-line);
   min-height: calc(100vh - 66px);
 }
+
 .v-sidebar .nav-link {
   color: var(--v-ink);
   font-family: var(--v-font-body);
@@ -301,8 +407,17 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   margin-bottom: 4px;
   border: 1px solid transparent;
 }
-.v-sidebar .nav-link:hover { background: rgba(94, 139, 74, 0.06); border-color: var(--v-line); }
-.v-sidebar .nav-link.active { background: var(--v-indigo); color: #fff; box-shadow: inset 0 0 0 1px rgba(199, 168, 94, 0.5); }
+
+.v-sidebar .nav-link:hover {
+  background: rgba(94, 139, 74, 0.06);
+  border-color: var(--v-line);
+}
+
+.v-sidebar .nav-link.active {
+  background: var(--v-indigo);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(199, 168, 94, 0.5);
+}
 
 /* ---- Studio panels ---- */
 .v-panel {
@@ -311,6 +426,7 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   border-radius: var(--v-radius);
   box-shadow: var(--v-shadow-sm);
 }
+
 .v-canvas {
   background:
     linear-gradient(45deg, #eaddc4 25%, transparent 25%),
@@ -343,7 +459,11 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
   transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
   color: var(--v-ink);
 }
-.v-selectable:hover { border-color: var(--v-gold); }
+
+.v-selectable:hover {
+  border-color: var(--v-gold);
+}
+
 .v-selectable.selected {
   border-color: var(--v-indigo);
   background: rgba(94, 139, 74, 0.05);
@@ -352,38 +472,114 @@ p, li, label, input, select, textarea, .btn, .nav-link { font-family: var(--v-fo
 
 /* ---- Footer ---- */
 .v-footer {
-  background: #17142b;               /* deep royal navy to ground the palette */
+  background: #17142b;
+  /* deep royal navy to ground the palette */
   color: #d8cbb3;
   border-top: 3px solid var(--v-gold);
 }
-.v-footer a { color: #d8cbb3; text-decoration: none; }
-.v-footer a:hover { color: #f7c9da; } /* baby-pink on hover */
+
+.v-footer a {
+  color: #d8cbb3;
+  text-decoration: none;
+}
+
+.v-footer a:hover {
+  color: #f7c9da;
+}
+
+/* baby-pink on hover */
 
 /* ---- Utility ---- */
-.v-section { padding: 4.5rem 0; }
-.v-min-vh { min-height: calc(100vh - 66px); }
-.hover-lift { transition: transform .2s ease, box-shadow .2s ease; }
-.hover-lift:hover { transform: translateY(-3px); box-shadow: var(--v-shadow); }
-.v-cursor { cursor: pointer; }
-.object-cover { object-fit: cover; }
+.v-section {
+  padding: 4.5rem 0;
+}
+
+.v-min-vh {
+  min-height: calc(100vh - 66px);
+}
+
+.hover-lift {
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--v-shadow);
+}
+
+.v-cursor {
+  cursor: pointer;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 
 /* Keyboard focus — visible, gold, on brand */
-a:focus-visible, button:focus-visible, .btn:focus-visible,
-.form-control:focus, .form-select:focus, .v-selectable:focus-visible {
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.form-control:focus,
+.form-select:focus,
+.v-selectable:focus-visible {
   outline: 2px solid var(--v-gold);
   outline-offset: 2px;
   box-shadow: none;
 }
-.form-control, .form-select { border-color: var(--v-line); background-color: var(--v-surface); }
-.form-control::placeholder { color: #ab9a86; }
+
+.form-control,
+.form-select {
+  border-color: var(--v-line);
+  background-color: var(--v-surface);
+}
+
+.form-control::placeholder {
+  color: #ab9a86;
+}
 
 /* Gentle first-paint reveal for hero content */
-@keyframes vRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.v-rise { animation: vRise 0.7s cubic-bezier(.2,.7,.2,1) both; }
-.v-rise-2 { animation: vRise 0.7s cubic-bezier(.2,.7,.2,1) 0.12s both; }
-.v-rise-3 { animation: vRise 0.7s cubic-bezier(.2,.7,.2,1) 0.24s both; }
+@keyframes vRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.v-rise {
+  animation: vRise 0.7s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+.v-rise-2 {
+  animation: vRise 0.7s cubic-bezier(.2, .7, .2, 1) 0.12s both;
+}
+
+.v-rise-3 {
+  animation: vRise 0.7s cubic-bezier(.2, .7, .2, 1) 0.24s both;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .v-rise, .v-rise-2, .v-rise-3 { animation: none; }
-  .v-card, .v-card-hover, .hover-lift { transition: none; }
+
+  .v-rise,
+  .v-rise-2,
+  .v-rise-3 {
+    animation: none;
+  }
+
+  .v-card,
+  .v-card-hover,
+  .hover-lift {
+    transition: none;
+  }
 }

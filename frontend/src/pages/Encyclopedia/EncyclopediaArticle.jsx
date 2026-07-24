@@ -22,14 +22,22 @@ export default function EncyclopediaArticle() {
   return (
     <>
       {/* Hero */}
-      <div className="text-white" style={{ background: `linear-gradient(135deg, ${article.accent}, ${article.accent}bb)` }}>
-        <div className="container py-5">
+      <div className="position-relative text-white overflow-hidden" style={{ background: `linear-gradient(135deg, ${article.accent}, ${article.accent}dd)` }}>
+        {article.image && (
+          <img
+            src={article.image}
+            alt={article.name}
+            className="position-absolute inset-0 w-100 h-100 object-fit-cover"
+            style={{ opacity: 0.25, mixBlendMode: 'luminosity' }}
+          />
+        )}
+        <div className="container py-5 position-relative">
           <Link to="/encyclopedia" className="text-white-50 text-decoration-none small">← Encyclopedia</Link>
           <h1 className="display-4 text-white mt-2 mb-1">{article.name}</h1>
           <p className="lead text-white-50 mb-3">{article.summary}</p>
           <div className="d-flex flex-wrap gap-2">
-            <span className="v-chip bg-white">{article.region}</span>
-            <span className="v-chip bg-white">Origin: {article.origin}</span>
+            <span className="v-chip bg-white text-dark">{article.region}</span>
+            <span className="v-chip bg-white text-dark">Origin: {article.origin}</span>
           </div>
         </div>
       </div>
@@ -53,6 +61,11 @@ export default function EncyclopediaArticle() {
             </Section>
 
             <Section title="Gallery">
+              {article.image && (
+                <div className="rounded-3 overflow-hidden mb-3" style={{ height: 260 }}>
+                  <img src={article.image} alt={article.name} className="w-100 h-100 object-fit-cover" />
+                </div>
+              )}
               <div className="row g-2">
                 {article.colors.map((c, i) => (
                   <div className="col-4 col-md-3" key={i}>
@@ -65,7 +78,7 @@ export default function EncyclopediaArticle() {
                   </div>
                 ))}
               </div>
-              <p className="small text-muted-2 mt-2 mb-0">Representative palette and motif patterns.</p>
+              <p className="small text-muted-2 mt-2 mb-0">Authentic handloom weave texture and traditional palette.</p>
             </Section>
 
             <Section title="References">
