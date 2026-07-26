@@ -39,6 +39,7 @@ export default function Materials() {
     <>
       <PageHeader
         eyebrow="Material Explorer"
+        deva="सामग्री"
         title="Find the right fabric"
         lead="Browse the live materials catalogue — filter by category, availability and name."
       />

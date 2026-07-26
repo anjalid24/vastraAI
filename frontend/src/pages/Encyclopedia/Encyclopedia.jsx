@@ -19,6 +19,7 @@ export default function Encyclopedia() {
     <>
       <PageHeader
         eyebrow="Textile Encyclopedia"
+        deva="ज्ञानकोश"
         title="The stories woven into every craft"
         lead="Explore the history, technique, materials and motifs behind India's living textile traditions."
       />
@@ -42,7 +43,13 @@ export default function Encyclopedia() {
             <div className="col-md-6 col-lg-4" key={a.slug}>
               <Link to={`/encyclopedia/${a.slug}`} className="text-decoration-none">
                 <div className="v-card v-card-hover h-100 overflow-hidden">
-                  <div style={{ height: 120, background: `linear-gradient(135deg, ${a.accent}, ${a.accent}99)` }} />
+                  <div className="position-relative overflow-hidden" style={{ height: 160 }}>
+                    {a.image ? (
+                      <img src={a.image} alt={a.name} className="w-100 h-100 object-fit-cover" />
+                    ) : (
+                      <div style={{ height: '100%', background: `linear-gradient(135deg, ${a.accent}, ${a.accent}99)` }} />
+                    )}
+                  </div>
                   <div className="p-4">
                     <span className="v-chip mb-2" style={{ background: `${a.accent}18`, color: a.accent }}>{a.region}</span>
                     <h5 className="text-dark">{a.name}</h5>

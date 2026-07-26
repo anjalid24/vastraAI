@@ -8,7 +8,7 @@ export const COMMUNITY_POSTS = [
     description:
       'Spent three weeks aligning the weft for this temple border. The AI mock-up helped me test colour combos before touching the loom.',
     category: 'Ikat',
-    image: null,
+    image: '/images/community_ikat.png',
     likes: 128,
     likedByMe: false,
     bookmarkedByMe: false,
@@ -25,7 +25,7 @@ export const COMMUNITY_POSTS = [
     description:
       'Generated 40 variations in the Design Studio, shortlisted 6, and paired them with the recommended georgette. Feedback welcome!',
     category: 'Bandhani',
-    image: null,
+    image: '/images/community_bandhani.png',
     likes: 86,
     likedByMe: true,
     bookmarkedByMe: true,
@@ -40,7 +40,7 @@ export const COMMUNITY_POSTS = [
     description:
       'The authenticity score nudged us toward traditional emerald-and-gold. Curious how other brands are using the heritage panel.',
     category: 'Patola',
-    image: null,
+    image: '/images/community_patola.png',
     likes: 54,
     likedByMe: false,
     bookmarkedByMe: false,

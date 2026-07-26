@@ -32,6 +32,7 @@ export default function Pricing() {
     <>
       <PageHeader
         eyebrow="Pricing Calculator"
+        deva="मूल्य"
         title="Estimate your design cost"
         lead="Get a transparent breakdown — material, design, artisan, shipping and GST — before you commit."
       />

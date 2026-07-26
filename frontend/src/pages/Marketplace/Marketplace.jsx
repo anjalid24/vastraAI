@@ -20,6 +20,7 @@ export default function Marketplace() {
     <>
       <PageHeader
         eyebrow="Artisan Marketplace"
+        deva="कारीगर"
         title="Commission India's master makers"
         lead="Discover skilled artisans across the country and bring your AI designs to life on real handlooms."
       />
@@ -35,9 +36,18 @@ export default function Marketplace() {
             <div className="col-md-6 col-lg-4" key={a.id}>
               <div className="v-card v-card-hover h-100 p-4">
                 <div className="d-flex align-items-center gap-3 mb-3">
-                  <span className="d-inline-grid rounded-4 text-white flex-shrink-0" style={{
-                    width: 60, height: 60, placeItems: 'center', background: a.accent,
-                    fontWeight: 700, fontSize: '1.1rem' }}>{initials(a.name)}</span>
+                  {a.image ? (
+                    <img
+                      src={a.image}
+                      alt={a.name}
+                      className="rounded-4 object-fit-cover flex-shrink-0"
+                      style={{ width: 60, height: 60, border: `2px solid ${a.accent}` }}
+                    />
+                  ) : (
+                    <span className="d-inline-grid rounded-4 text-white flex-shrink-0" style={{
+                      width: 60, height: 60, placeItems: 'center', background: a.accent,
+                      fontWeight: 700, fontSize: '1.1rem' }}>{initials(a.name)}</span>
+                  )}
                   <div>
                     <h5 className="mb-0">{a.name}</h5>
                     <div className="small text-muted-2">{a.craft}</div>
@@ -64,9 +74,18 @@ export default function Marketplace() {
         {active && (
           <>
             <div className="d-flex align-items-center gap-3 mb-3">
-              <span className="d-inline-grid rounded-4 text-white" style={{
-                width: 56, height: 56, placeItems: 'center', background: active.accent, fontWeight: 700 }}>
-                {initials(active.name)}</span>
+              {active.image ? (
+                <img
+                  src={active.image}
+                  alt={active.name}
+                  className="rounded-4 object-fit-cover flex-shrink-0"
+                  style={{ width: 64, height: 64, border: `2px solid ${active.accent}` }}
+                />
+              ) : (
+                <span className="d-inline-grid rounded-4 text-white" style={{
+                  width: 56, height: 56, placeItems: 'center', background: active.accent, fontWeight: 700 }}>
+                  {initials(active.name)}</span>
+              )}
               <div>
                 <div className="fw-semibold">{active.craft}</div>
                 <div className="small text-muted-2">📍 {active.city} · ★ {active.rating}</div>

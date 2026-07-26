@@ -1,159 +1,162 @@
 const Material = require('../models/Material');
-const asyncHandler = require('../utils/asyncHandler');
-const ApiError = require('../utils/ApiError');
-const { ROLES } = require('../config/roles');
+const Design = require('../models/Design');
+const logger = require('../middleware/logger');
 
-// Fields a client is allowed to set/update. createdBy and timestamps are
-// managed by the server, never taken from the request body.
-const WRITABLE_FIELDS = [
-  'materialName',
-  'category',
-  'description',
-  'pricePerMeter',
-  'stockQuantity',
-  'colorOptions',
-  'imageUrl',
-  'supplierName',
-  'countryOfOrigin',
-  'sustainabilityRating',
-  'isAvailable',
-];
+// Get all materials
+exports.getAllMaterials = async (req, res) => {
+  try {
+    const { category, search } = req.query;
+    const filter = { availability: true };
 
-// Pick only the whitelisted fields from a request body.
-const pickWritable = (body = {}) =>
-  WRITABLE_FIELDS.reduce((acc, key) => {
-    if (body[key] !== undefined) acc[key] = body[key];
-    return acc;
-  }, {});
+    if (category) filter.category = category;
+    if (search) {
+      filter.$text = { $search: search };
+    }
 
-/**
- * @desc    Create a new material
- * @route   POST /api/materials
- * @access  Private (Brand, Admin)
- */
-const createMaterial = asyncHandler(async (req, res) => {
-  const payload = pickWritable(req.body);
-  // Ownership is taken from the authenticated user, not the request body.
-  payload.createdBy = req.user._id;
+    const materials = await Material.find(filter)
+      .populate('recommendedPatterns', 'name category');
 
-  // Mongoose schema validation (required fields, min/enum, etc.) runs here
-  // and any error is normalized by the centralized error handler.
-  const material = await Material.create(payload);
-
-  res.status(201).json({
-    success: true,
-    message: 'Material created successfully',
-    data: { material },
-  });
-});
-
-/**
- * @desc    Get all materials (supports basic filtering & pagination)
- * @route   GET /api/materials
- * @access  Public
- * @query   category, isAvailable, search, page, limit
- */
-const getMaterials = asyncHandler(async (req, res) => {
-  const { category, isAvailable, search } = req.query;
-
-  const filter = {};
-  if (category) filter.category = category;
-  if (isAvailable !== undefined) filter.isAvailable = isAvailable === 'true';
-  if (search) filter.materialName = { $regex: search.trim(), $options: 'i' };
-
-  const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
-  const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 20, 1), 100);
-  const skip = (page - 1) * limit;
-
-  const [materials, total] = await Promise.all([
-    Material.find(filter)
-      .populate('createdBy', 'name email role')
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit),
-    Material.countDocuments(filter),
-  ]);
-
-  res.status(200).json({
-    success: true,
-    count: materials.length,
-    total,
-    page,
-    pages: Math.ceil(total / limit) || 1,
-    data: { materials },
-  });
-});
-
-/**
- * @desc    Get a single material by id
- * @route   GET /api/materials/:id
- * @access  Public
- */
-const getMaterialById = asyncHandler(async (req, res) => {
-  const material = await Material.findById(req.params.id).populate(
-    'createdBy',
-    'name email role'
-  );
-  if (!material) {
-    throw new ApiError(404, 'Material not found');
-  }
-  res.status(200).json({ success: true, data: { material } });
-});
-
-// Allow the change only if the requester owns the material or is an admin.
-const assertCanModify = (material, user) => {
-  const isOwner = material.createdBy.toString() === user._id.toString();
-  if (!isOwner && user.role !== ROLES.ADMIN) {
-    throw new ApiError(403, 'You are not allowed to modify this material');
+    res.json({
+      status: 'success',
+      data: { materials }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    });
   }
 };
 
-/**
- * @desc    Update a material
- * @route   PUT /api/materials/:id
- * @access  Private (owner Brand, Admin)
- */
-const updateMaterial = asyncHandler(async (req, res) => {
-  const material = await Material.findById(req.params.id);
-  if (!material) {
-    throw new ApiError(404, 'Material not found');
+// Get single material
+exports.getMaterial = async (req, res) => {
+  try {
+    const material = await Material.findById(req.params.id)
+      .populate('recommendedPatterns', 'name category sampleImages');
+
+    if (!material) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Material not found'
+      });
+    }
+
+    res.json({
+      status: 'success',
+      data: { material }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    });
   }
+};
 
-  assertCanModify(material, req.user);
-
-  Object.assign(material, pickWritable(req.body));
-  // runValidators fire on save() by default for modified paths.
-  const updated = await material.save();
-
-  res.status(200).json({
-    success: true,
-    message: 'Material updated successfully',
-    data: { material: updated },
-  });
-});
-
-/**
- * @desc    Delete a material
- * @route   DELETE /api/materials/:id
- * @access  Private (owner Brand, Admin)
- */
-const deleteMaterial = asyncHandler(async (req, res) => {
-  const material = await Material.findById(req.params.id);
-  if (!material) {
-    throw new ApiError(404, 'Material not found');
+// Create material (Admin only)
+exports.createMaterial = async (req, res) => {
+  try {
+    const material = await Material.create(req.body);
+    logger.info('Material created', { materialId: material._id, name: material.name });
+    res.status(201).json({
+      status: 'success',
+      data: { material }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    });
   }
+};
 
-  assertCanModify(material, req.user);
+// Update material (Admin only)
+exports.updateMaterial = async (req, res) => {
+  try {
+    const material = await Material.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
 
-  await material.deleteOne();
+    if (!material) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Material not found'
+      });
+    }
 
-  res.status(200).json({ success: true, message: 'Material deleted successfully' });
-});
+    logger.info('Material updated', { materialId: material._id });
+    res.json({
+      status: 'success',
+      data: { material }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
 
-module.exports = {
-  createMaterial,
-  getMaterials,
-  getMaterialById,
-  updateMaterial,
-  deleteMaterial,
+// Delete material (Admin only)
+exports.deleteMaterial = async (req, res) => {
+  try {
+    const material = await Material.findByIdAndDelete(req.params.id);
+
+    if (!material) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Material not found'
+      });
+    }
+
+    logger.info('Material deleted', { materialId: material._id });
+    res.json({
+      status: 'success',
+      message: 'Material deleted successfully'
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
+
+// Get material categories
+exports.getCategories = async (req, res) => {
+  try {
+    const categories = await Material.distinct('category');
+    res.json({
+      status: 'success',
+      data: { categories }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
+
+// Get materials by pattern recommendation
+exports.getRecommendedForPattern = async (req, res) => {
+  try {
+    const { patternId } = req.params;
+    const materials = await Material.find({
+      recommendedPatterns: patternId,
+      availability: true
+    });
+
+    res.json({
+      status: 'success',
+      data: { materials }
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    });
+  }
 };

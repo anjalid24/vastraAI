@@ -1,18 +1,28 @@
 const express = require('express');
-const { signup, login, getMe, adminOnly } = require('../controllers/authController');
-const { protect, authorize } = require('../middleware/authMiddleware');
-const { ROLES } = require('../config/roles');
-
 const router = express.Router();
+const { 
+  register, 
+  login, 
+  getMe, 
+  updatePassword,
+  forgotPassword,
+  resetPassword,
+  logout,
+  verifyEmail
+} = require('../controllers/authController');
+const { protect } = require('../middleware/auth');
+const { authLimiter } = require('../middleware/rateLimiter');
 
-// ── Public ────────────────────────────────────────────────
-router.post('/signup', signup);
-router.post('/login', login);
+// Public routes (with rate limiting)
+router.post('/register', authLimiter, register);
+router.post('/login', authLimiter, login);
+router.post('/forgot-password', authLimiter, forgotPassword);
+router.post('/reset-password', authLimiter, resetPassword);
+router.get('/verify-email/:token', verifyEmail);
 
-// ── Protected (any authenticated user) ────────────────────
+// Protected routes
 router.get('/me', protect, getMe);
-
-// ── Protected + role-restricted (admin only) ──────────────
-router.get('/admin', protect, authorize(ROLES.ADMIN), adminOnly);
+router.put('/password', protect, updatePassword);
+router.post('/logout', protect, logout);
 
 module.exports = router;

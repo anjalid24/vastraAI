@@ -1,24 +1,27 @@
 const express = require('express');
+const router = express.Router();
 const {
+  getAllMaterials,
+  getMaterial,
   createMaterial,
-  getMaterials,
-  getMaterialById,
   updateMaterial,
   deleteMaterial,
+  getCategories,
+  getRecommendedForPattern
 } = require('../controllers/materialController');
-const { protect, authorize } = require('../middleware/authMiddleware');
-const { ROLES } = require('../config/roles');
+const { protect, authorize } = require('../middleware/auth');
 
-const router = express.Router();
+// Public routes
+router.get('/', getAllMaterials);
+router.get('/categories', getCategories);
+router.get('/pattern/:patternId', getRecommendedForPattern);
+router.get('/:id', getMaterial);
 
-// ── Public reads ──────────────────────────────────────────
-router.get('/', getMaterials);
-router.get('/:id', getMaterialById);
-
-// ── Protected writes (Brand or Admin) ─────────────────────
-// Artisans browse materials but do not manage the catalogue.
-router.post('/', protect, authorize(ROLES.BRAND, ROLES.ADMIN), createMaterial);
-router.put('/:id', protect, authorize(ROLES.BRAND, ROLES.ADMIN), updateMaterial);
-router.delete('/:id', protect, authorize(ROLES.BRAND, ROLES.ADMIN), deleteMaterial);
+// Admin only routes
+router.use(protect);
+router.use(authorize('admin'));
+router.post('/', createMaterial);
+router.put('/:id', updateMaterial);
+router.delete('/:id', deleteMaterial);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { BlockPrintDivider, Mandala } from '../ornaments/Ornaments.jsx';
 
 const COLS = [
   {
@@ -29,12 +30,18 @@ const COLS = [
 
 export default function Footer() {
   return (
-    <footer className="v-footer pt-5 pb-4 mt-auto">
-      <div className="container">
+    <footer className="v-footer pt-0 pb-4 mt-auto position-relative overflow-hidden">
+      <BlockPrintDivider tone="gold" style={{ opacity: 0.5 }} />
+      <Mandala size={300} color="#c9a24b" opacity={0.06} className="position-absolute d-none d-md-block"
+        style={{ bottom: -110, right: -80, pointerEvents: 'none' }} />
+      <div className="container pt-5 position-relative">
         <div className="row g-4">
           <div className="col-lg-4">
-            <div className="v-brand text-white fs-4 mb-2">Vastra AI</div>
-            <p className="text-white-50 mb-3" style={{ maxWidth: 320 }}>
+            <div className="v-brand fs-3 mb-1" style={{ color: '#fdf6f4' }}>Vastra AI</div>
+            <div className="text-gold mb-2" style={{ fontFamily: 'var(--v-font-head)', letterSpacing: '.1em' }}>
+              वस्त्र · कारीगर · परंपरा
+            </div>
+            <p className="mb-3" style={{ maxWidth: 320, color: '#b9ab92' }}>
               AI-powered textile design that preserves India's heritage crafts —
               connecting brands, artisans and living traditions.
             </p>

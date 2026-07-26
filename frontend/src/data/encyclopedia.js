@@ -10,6 +10,7 @@ export const ENCYCLOPEDIA = [
     region: 'Gujarat · Rajasthan',
     origin: 'Kutch & Jamnagar, Gujarat',
     accent: '#b91c1c',
+    image: '/images/bandhani.png',
     summary:
       'An ancient tie-and-dye craft where thousands of hand-tied knots resist the dye to form dotted patterns.',
     technique:
@@ -34,6 +35,7 @@ export const ENCYCLOPEDIA = [
     region: 'Telangana · Odisha · Gujarat',
     origin: 'Pochampally & Sambalpur',
     accent: '#0f766e',
+    image: '/images/ikat.png',
     summary:
       'A resist-dyeing technique applied to yarns before weaving, giving patterns their soft feathered edges.',
     technique:
@@ -58,6 +60,7 @@ export const ENCYCLOPEDIA = [
     region: 'Patan, Gujarat',
     origin: 'Patan',
     accent: '#9d174d',
+    image: '/images/patola.png',
     summary:
       'A rare double-ikat silk weave, identical on both sides, historically worn by royalty.',
     technique:
