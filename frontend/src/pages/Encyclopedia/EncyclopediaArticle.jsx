@@ -43,7 +43,7 @@ export default function EncyclopediaArticle() {
       </div>
 
       <div className="container py-5">
-        <div className="row g-5">
+        <div className="row g-4">
           <div className="col-lg-8">
             <Section title="Technique">{article.technique}</Section>
 
@@ -78,12 +78,12 @@ export default function EncyclopediaArticle() {
                   </div>
                 ))}
               </div>
-              <p className="small text-muted-2 mt-2 mb-0">Authentic handloom weave texture and traditional palette.</p>
+              <p className="small text-muted-2 mt-2 mb-0">Project illustrations and a suggested colour palette, not a certificate of origin.</p>
             </Section>
 
             <Section title="References">
               <ul className="text-muted-2">
-                {article.references.map((r) => <li key={r}>{r}</li>)}
+                <li><a href="https://www.indianculture.gov.in/textiles-and-fabrics-of-india/history" target="_blank" rel="noreferrer">Indian Culture Portal: textile history overview</a></li><li><a href="https://www.indianculture.gov.in/textiles-and-fabrics-of-india/manufacturing-process" target="_blank" rel="noreferrer">Indian Culture Portal: manufacturing processes</a></li>
               </ul>
             </Section>
           </div>
@@ -103,7 +103,7 @@ export default function EncyclopediaArticle() {
 
             <div className="v-card p-4 mb-3">
               <h6 className="v-eyebrow mb-3">Try it in the studio</h6>
-              <p className="small text-muted-2">Generate your own {article.name} design with authentic colours and motifs.</p>
+              <p className="small text-muted-2">Make a geometric study inspired by {article.name}. This is procedural, not an authentic textile reproduction.</p>
               <Link to="/studio" className="btn btn-primary w-100">Open Design Studio</Link>
             </div>
 

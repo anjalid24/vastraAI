@@ -1,293 +1,238 @@
-import { useState } from 'react';
-import designService from '../../services/designService.js';
-import { HERITAGE, PATTERNS } from '../../data/heritage.js';
-import { STUDIO_MATERIALS } from '../../utils/constants.js';
-import HeritagePanel from './HeritagePanel.jsx';
-import { formatINR } from '../../utils/formatters.js';
-
-/**
- * Design Studio — the heart of Vastra AI. Three-panel layout:
- *   Left   → pattern / material / prompt / reference / advanced settings
- *   Center → generated image + generate / regenerate / download / save
- *   Right  → Heritage Inspiration, AI recommendations, authenticity, cost,
- *            and generation history
- *
- * Generation is currently mocked (see designService) until the Django AI
- * service is wired in; every control is already shaped for the real payload.
- */
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import designService from "../../services/designService.js";
+import { PATTERNS, HERITAGE } from "../../data/heritage.js";
+import { STUDIO_MATERIALS } from "../../utils/constants.js";
 export default function DesignStudio() {
-  const [pattern, setPattern] = useState('Bandhani');
-  const [material, setMaterial] = useState('Silk');
-  const [prompt, setPrompt] = useState('');
-  const [referenceName, setReferenceName] = useState('');
-  const [settings, setSettings] = useState({ steps: 30, cfg: 7, seed: '' });
-
-  const [generating, setGenerating] = useState(false);
-  const [result, setResult] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [saved, setSaved] = useState([]);
-
-  const setSetting = (k, v) => setSettings((s) => ({ ...s, [k]: v }));
-
+  const [options, setOptions] = useState({
+    pattern: "Bandhani",
+    material: "Cotton",
+    seed: 42,
+    density: 7,
+    palette: "heritage",
+  });
+  const [result, setResult] = useState(null),
+    [history, setHistory] = useState([]),
+    [error, setError] = useState(""),
+    [busy, setBusy] = useState(false),
+    [status, setStatus] = useState("");
+  const update = (key, value) => setOptions((o) => ({ ...o, [key]: value }));
   const generate = async () => {
-    setGenerating(true);
+    setBusy(true);
+    setError("");
     try {
-      const out = await designService.generate({
-        pattern, material, prompt,
-        steps: Number(settings.steps),
-        cfg: Number(settings.cfg),
-        seed: settings.seed ? Number(settings.seed) : undefined,
-      });
-      setResult(out);
-      setHistory((h) => [out, ...h].slice(0, 12));
+      const r = await designService.generate(options);
+      setResult(r);
+      setHistory((h) => [r, ...h].slice(0, 8));
+      setStatus("Pattern study created. Download it or try another variation.");
+    } catch {
+      setError("Could not create this study. Please try again.");
     } finally {
-      setGenerating(false);
+      setBusy(false);
     }
   };
-
-  const regenerate = () => {
-    // A fresh seed unless the user pinned one.
-    if (!settings.seed) setSetting('seed', '');
-    generate();
-  };
-
   const download = () => {
     if (!result) return;
-    const a = document.createElement('a');
-    a.href = result.imageUrl;
-    a.download = `vastra-${pattern}-${result.seed}.svg`;
+    const url = URL.createObjectURL(
+      new Blob([result.svg], { type: "image/svg+xml" }),
+    );
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `vastra-${result.pattern.toLowerCase()}-${result.seed}.svg`;
     a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setStatus("SVG download started.");
   };
-
-  const save = () => {
-    if (result && !saved.find((s) => s.id === result.id)) setSaved((s) => [result, ...s]);
-  };
-
-  const applyColor = (c) => setPrompt((p) => (p ? `${p}, ${c.name.toLowerCase()}` : c.name.toLowerCase()));
-  const applyMaterial = (m) => STUDIO_MATERIALS.includes(m) && setMaterial(m);
-
   return (
-    <div className="v-weave-bg v-min-vh">
-      <div className="container-fluid py-4 px-lg-4">
-        <div className="d-flex align-items-center justify-content-between mb-3">
-          <div>
-            <div className="v-eyebrow">Design Studio</div>
-            <h1 className="h4 mb-0">Create a {pattern} design</h1>
-          </div>
-          <span className="v-chip v-chip-emerald">AI generator</span>
+    <div className="studio-page container py-5">
+      <header className="studio-heading">
+        <div>
+          <p className="editorial-kicker">THE PATTERN WORKSHOP</p>
+          <h1>
+            Make a little
+            <br />
+            <em>pattern magic.</em>
+          </h1>
+          <p className="text-muted-2">
+            Explore colour, rhythm and repetition. Every study is made in your
+            browser.
+          </p>
         </div>
-
-        <div className="row g-3">
-          {/* ---------------- LEFT PANEL ---------------- */}
-          <div className="col-lg-3 order-2 order-lg-1">
-            <div className="v-panel p-3 mb-3">
-              <PanelLabel>Pattern</PanelLabel>
-              <div className="d-grid gap-2">
-                {PATTERNS.map((p) => (
-                  <button key={p} type="button" onClick={() => setPattern(p)}
-                    className={`v-selectable p-2 d-flex align-items-center gap-2 bg-white ${pattern === p ? 'selected' : ''}`}>
-                    <span className="v-swatch" style={{ background: HERITAGE[p].colors[0].hex }} />
-                    <span className="fw-semibold small">{p}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="v-panel p-3 mb-3">
-              <PanelLabel>Material</PanelLabel>
-              <div className="d-flex flex-wrap gap-2">
-                {STUDIO_MATERIALS.map((m) => (
-                  <button key={m} type="button" onClick={() => setMaterial(m)}
-                    className={`v-selectable px-3 py-2 bg-white small fw-semibold ${material === m ? 'selected' : ''}`}>
-                    {m}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="v-panel p-3 mb-3">
-              <PanelLabel>Prompt</PanelLabel>
-              <textarea className="form-control" rows={3} value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="e.g. festive Bandhani with marigold dots and indigo border" />
-
-              <PanelLabel className="mt-3">Reference image</PanelLabel>
-              <label className="v-selectable d-block text-center p-3 bg-white v-cursor small text-muted-2">
-                {referenceName ? `📎 ${referenceName}` : '⬆️ Upload a reference (optional)'}
-                <input type="file" accept="image/*" className="d-none"
-                  onChange={(e) => setReferenceName(e.target.files?.[0]?.name || '')} />
-              </label>
-            </div>
-
-            <div className="v-panel p-3">
-              <PanelLabel>Advanced settings</PanelLabel>
-              <RangeRow label="Steps" min={10} max={60} value={settings.steps}
-                onChange={(v) => setSetting('steps', v)} />
-              <RangeRow label="CFG scale" min={1} max={15} value={settings.cfg}
-                onChange={(v) => setSetting('cfg', v)} />
-              <label className="form-label small fw-semibold mb-1 mt-2">Seed</label>
-              <input className="form-control form-control-sm" type="number" value={settings.seed}
-                onChange={(e) => setSetting('seed', e.target.value)} placeholder="Random" />
-            </div>
-          </div>
-
-          {/* ---------------- CENTER PANEL ---------------- */}
-          <div className="col-lg-6 order-1 order-lg-2">
-            <div className="v-panel p-3">
-              <div className="v-canvas mb-3 position-relative" style={{ minHeight: 440 }}>
-                {generating ? (
-                  <div className="text-center text-muted-2">
-                    <div className="spinner-border text-primary mb-3" role="status" />
-                    <div className="fw-semibold">Weaving your design…</div>
-                  </div>
-                ) : result ? (
-                  <img src={result.imageUrl} alt={`${pattern} design`}
-                    className="img-fluid rounded-3 shadow"
-                    style={{ maxHeight: 420, objectFit: 'contain' }} />
-                ) : (
-                  <div className="text-center text-muted-2">
-                    <div className="fs-1">🎨</div>
-                    <div className="fw-semibold">Your generated design will appear here</div>
-                    <div className="small">Choose a pattern & material, then hit Generate.</div>
-                  </div>
-                )}
-              </div>
-
-              <div className="d-flex flex-wrap gap-2">
-                <button className="btn btn-primary flex-grow-1" onClick={generate} disabled={generating}>
-                  {generating ? 'Generating…' : '✨ Generate'}
+        <span className="v-chip">Procedural SVG, not AI</span>
+      </header>
+      <div className="studio-layout">
+        <aside className="v-card studio-controls">
+          <h2 className="h5">Your ingredients</h2>
+          <fieldset>
+            <legend>01 / Craft inspiration</legend>
+            <div className="pattern-choices">
+              {PATTERNS.map((p) => (
+                <button
+                  key={p}
+                  aria-pressed={options.pattern === p}
+                  onClick={() => update("pattern", p)}
+                  className={options.pattern === p ? "selected" : ""}
+                >
+                  <img src={HERITAGE[p].image} alt="" />
+                  {p}
                 </button>
-                <button className="btn btn-outline-primary" onClick={regenerate} disabled={generating || !result}>
-                  ↻ Regenerate
-                </button>
-                <button className="btn btn-outline-primary" onClick={download} disabled={!result}>⬇ Download</button>
-                <button className="btn btn-emerald" onClick={save} disabled={!result}>♥ Save</button>
-              </div>
-
-              {result && (
-                <div className="d-flex flex-wrap gap-3 small text-muted-2 mt-3 px-1">
-                  <span>Seed: <strong>{result.seed}</strong></span>
-                  <span>Steps: <strong>{settings.steps}</strong></span>
-                  <span>CFG: <strong>{settings.cfg}</strong></span>
-                  <span>Material: <strong>{material}</strong></span>
-                </div>
-              )}
+              ))}
             </div>
-
-            {saved.length > 0 && (
-              <div className="v-panel p-3 mt-3">
-                <PanelLabel>Saved designs ({saved.length})</PanelLabel>
-                <div className="d-flex gap-2 overflow-auto">
-                  {saved.map((s) => (
-                    <img key={s.id} src={s.imageUrl} alt="saved" className="rounded-3"
-                      style={{ width: 72, height: 72, objectFit: 'cover' }} />
-                  ))}
-                </div>
+          </fieldset>
+          <label htmlFor="study-material">02 / Fabric note</label>
+          <select
+            id="study-material"
+            className="form-select"
+            value={options.material}
+            onChange={(e) => update("material", e.target.value)}
+          >
+            {STUDIO_MATERIALS.map((m) => (
+              <option key={m}>{m}</option>
+            ))}
+          </select>
+          <p className="control-note">
+            A label for your study, not a fabric simulation.
+          </p>
+          <label htmlFor="study-palette">03 / Colour story</label>
+          <select
+            id="study-palette"
+            className="form-select"
+            value={options.palette}
+            onChange={(e) => update("palette", e.target.value)}
+          >
+            <option value="heritage">Craft-inspired</option>
+            <option value="indigo">Indigo & chalk</option>
+            <option value="rose">Rose & terracotta</option>
+          </select>
+          <label htmlFor="study-density">
+            04 / Repeat density: {options.density}
+          </label>
+          <input
+            id="study-density"
+            className="form-range"
+            type="range"
+            min="3"
+            max="12"
+            value={options.density}
+            onChange={(e) => update("density", +e.target.value)}
+          />
+          <label htmlFor="study-seed">05 / Variation seed</label>
+          <input
+            id="study-seed"
+            className="form-control"
+            type="number"
+            min="0"
+            max="4294967295"
+            step="1"
+            value={options.seed}
+            onChange={(e) => update("seed", e.target.value)}
+          />
+          <p className="control-note">
+            Same ingredients + same seed = the same pattern.
+          </p>
+          <button
+            className="btn btn-primary w-100"
+            disabled={busy}
+            onClick={generate}
+          >
+            {busy ? "Making your study…" : "Create pattern study ↗"}
+          </button>
+        </aside>
+        <section className="studio-output" aria-label="Pattern preview">
+          <div className="pattern-canvas">
+            {result ? (
+              <img
+                src={result.imageUrl}
+                alt={`${result.pattern}-inspired geometric study, seed ${result.seed}`}
+              />
+            ) : (
+              <div className="canvas-empty">
+                <span aria-hidden="true">✳</span>
+                <h2>A new repeat starts here.</h2>
+                <p>Choose your ingredients, then create a study.</p>
               </div>
             )}
           </div>
-
-          {/* ---------------- RIGHT PANEL ---------------- */}
-          <div className="col-lg-3 order-3">
-            <div className="mb-3">
-              <HeritagePanel pattern={pattern} onApplyColor={applyColor} onApplyMaterial={applyMaterial} />
+          <div className="preview-toolbar">
+            <div>
+              <strong>
+                {result
+                  ? `${result.pattern} / ${result.material}`
+                  : "Your blank canvas"}
+              </strong>
+              <p>
+                {result
+                  ? `Seed ${result.seed} · ${result.density} repeats · ${result.palette}`
+                  : "Downloadable SVG · no account required"}
+              </p>
             </div>
-
-            <div className="v-panel p-3 mb-3">
-              <PanelLabel>AI recommendations</PanelLabel>
-              <RecoRow label="Recommended material" value={HERITAGE[pattern].materials[0]} />
-              <div className="d-flex align-items-center justify-content-between py-1">
-                <span className="small text-muted-2">Traditional colours</span>
-                <span className="d-flex gap-1">
-                  {HERITAGE[pattern].colors.map((c) => (
-                    <span key={c.hex} className="v-swatch" style={{ background: c.hex, width: 18, height: 18 }} />
-                  ))}
-                </span>
-              </div>
-              <RecoRow label="Similar designs" value={`${HERITAGE[pattern].motifs.length} motifs`} />
-            </div>
-
-            <div className="v-panel p-3 mb-3">
-              <PanelLabel>Authenticity score</PanelLabel>
-              <AuthenticityMeter score={result?.authenticityScore} />
-            </div>
-
-            <div className="v-panel p-3 mb-3">
-              <PanelLabel>Cost estimation</PanelLabel>
-              <div className="d-flex justify-content-between small"><span className="text-muted-2">Est. per metre</span>
-                <strong>{formatINR(material === 'Silk' ? 1200 : material === 'Linen' ? 650 : 480)}</strong></div>
-              <div className="d-flex justify-content-between small"><span className="text-muted-2">Design charge</span>
-                <strong>{formatINR(300)}</strong></div>
-              <hr className="my-2" />
-              <p className="small text-muted-2 mb-0">Full breakdown in the <a href="/pricing">Pricing Calculator</a>.</p>
-            </div>
-
-            <div className="v-panel p-3">
-              <PanelLabel>Generation history</PanelLabel>
-              {history.length === 0 ? (
-                <p className="small text-muted-2 mb-0">Your generated designs will be listed here.</p>
-              ) : (
-                <div className="d-grid gap-2">
-                  {history.map((h) => (
-                    <button key={h.id} className="v-selectable d-flex align-items-center gap-2 p-2 bg-white"
-                      onClick={() => setResult(h)}>
-                      <img src={h.imageUrl} alt="" style={{ width: 40, height: 40, objectFit: 'cover' }} className="rounded-2" />
-                      <span className="small text-start">
-                        <div className="fw-semibold">{h.pattern}</div>
-                        <div className="text-muted-2">seed {h.seed}</div>
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <button
+              className="btn btn-outline-primary"
+              disabled={!result}
+              onClick={download}
+            >
+              Download SVG ↓
+            </button>
           </div>
-        </div>
+          <p className="control-note">
+            Inspired by craft, not a reproduction or authenticity certificate.
+            No prompt, reference image or AI model is used. History stays on
+            this page and clears on refresh.
+          </p>
+          <p role="status" className="small">
+            {status}
+          </p>
+          {error && (
+            <p role="alert" className="text-danger">
+              {error}
+            </p>
+          )}
+          {history.length > 0 && (
+            <section className="history-panel">
+              <h2 className="h5">Your recent studies</h2>
+              <div className="study-history">
+                {history.map((r, i) => (
+                  <button
+                    key={r.id}
+                    onClick={() => {
+                      setResult(r);
+                      setStatus(
+                        "Opened a previous study. Controls remain ready for your next one.",
+                      );
+                    }}
+                    aria-label={`Open study ${i + 1}: ${r.pattern}, seed ${r.seed}`}
+                  >
+                    <img src={r.imageUrl} alt="" />
+                    <span>{r.pattern}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+        </section>
+        <aside className="studio-notes">
+          <p className="editorial-kicker">A THREAD TO FOLLOW</p>
+          <h2>{options.pattern}</h2>
+          <p>{HERITAGE[options.pattern].tagline}</p>
+          <img
+            src={HERITAGE[options.pattern].image}
+            alt={`${options.pattern} inspiration image from the project's original asset collection`}
+          />
+          <p className="control-note">
+            Project illustration. These geometric studies are not artisan-made
+            textiles.
+          </p>
+          <Link to={`/encyclopedia/${HERITAGE[options.pattern].slug}`}>
+            Read the project notes ↗
+          </Link>
+          <hr />
+          <h3 className="h6">Take it further</h3>
+          <p className="small text-muted-2">
+            Try a lower repeat density for a bolder rhythm. Change the seed for
+            a fresh arrangement.
+          </p>
+        </aside>
       </div>
     </div>
-  );
-}
-
-/* ---------- small building blocks ---------- */
-function PanelLabel({ children, className = '' }) {
-  return <div className={`v-eyebrow mb-2 ${className}`} style={{ fontSize: '.68rem' }}>{children}</div>;
-}
-
-function RangeRow({ label, min, max, value, onChange }) {
-  return (
-    <div className="mb-2">
-      <div className="d-flex justify-content-between small fw-semibold">
-        <span>{label}</span><span className="text-indigo">{value}</span>
-      </div>
-      <input type="range" className="form-range" min={min} max={max} value={value}
-        onChange={(e) => onChange(Number(e.target.value))} />
-    </div>
-  );
-}
-
-function RecoRow({ label, value }) {
-  return (
-    <div className="d-flex align-items-center justify-content-between py-1">
-      <span className="small text-muted-2">{label}</span>
-      <span className="v-chip">{value}</span>
-    </div>
-  );
-}
-
-function AuthenticityMeter({ score }) {
-  if (score == null) {
-    return <p className="small text-muted-2 mb-0">Generate a design to score its authenticity against heritage norms.</p>;
-  }
-  const color = score >= 85 ? 'var(--v-emerald-600)' : score >= 70 ? 'var(--v-saffron-600)' : '#b91c1c';
-  return (
-    <>
-      <div className="d-flex align-items-baseline gap-2">
-        <span className="fs-3 fw-bold" style={{ color, fontFamily: 'var(--v-font-head)' }}>{score}</span>
-        <span className="text-muted-2 small">/ 100</span>
-      </div>
-      <div className="progress mt-1" style={{ height: 8 }}>
-        <div className="progress-bar" style={{ width: `${score}%`, background: color }} />
-      </div>
-    </>
   );
 }

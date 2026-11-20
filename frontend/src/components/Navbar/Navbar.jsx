@@ -1,3 +1,4 @@
+import { isDemo } from '../../services/demo.js';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { ROLE_LABELS, ROLE_CHIP } from '../../utils/constants.js';
@@ -19,12 +20,13 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    if (isDemo) { navigate("/studio"); return; }
     logout();
     navigate('/');
   };
 
   return (
-    <nav className="navbar navbar-expand-lg v-navbar sticky-top py-2">
+    <nav className="navbar navbar-expand-lg v-navbar py-2">
       <div className="container">
         <Link className="navbar-brand v-brand fs-3 d-flex align-items-center gap-2" to="/">
           <span
@@ -119,7 +121,7 @@ export default function Navbar() {
                   <li><hr className="dropdown-divider" /></li>
                   <li>
                     <button className="dropdown-item text-danger" onClick={handleLogout}>
-                      Log out
+                      {isDemo ? "Back to workshop" : "Log out"}
                     </button>
                   </li>
                 </ul>

@@ -1,5 +1,6 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('node:fs');
 const { cloudinary } = require('../config/cloudinary');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const logger = require('./logger');
@@ -9,7 +10,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'vastra-ai',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'],
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
     transformation: [
       { width: 2048, height: 2048, crop: 'limit' },
       { quality: 'auto:best' },
@@ -35,13 +36,13 @@ const localStorage = multer.diskStorage({
 
 // File filter
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
-  
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
     logger.warn('Invalid file type attempted', { mimetype: file.mimetype, filename: file.originalname });
-    cb(new Error('Invalid file type. Only JPEG, PNG, WEBP, GIF, and SVG are allowed.'), false);
+    cb(new Error('Invalid file type. Only JPEG, PNG, WEBP, and GIF are allowed.'), false);
   }
 };
 
@@ -81,11 +82,11 @@ exports.uploadMultipleLocal = localUpload.array('images', 10);
 exports.handleUploadError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     logger.error('Multer error:', { error: err.message, code: err.code });
-    
-    if (err.code === 'FILE_TOO_LARGE') {
+
+    if (err.code === 'LIMIT_FILE_SIZE') {
       return res.status(400).json({
         status: 'error',
-        message: 'File too large. Maximum size is ' + (parseInt(process.env.MAX_FILE_SIZE) / (1024 * 1024)) + 'MB'
+        message: 'File too large. Maximum size is ' + ((parseInt(process.env.MAX_FILE_SIZE) || 10 * 1024 * 1024) / (1024 * 1024)) + 'MB'
       });
     }
     if (err.code === 'LIMIT_FILE_COUNT') {
@@ -100,13 +101,13 @@ exports.handleUploadError = (err, req, res, next) => {
         message: 'Unexpected file field. Please check the field name.'
       });
     }
-    
+
     return res.status(400).json({
       status: 'error',
       message: err.message
     });
   }
-  
+
   if (err) {
     logger.error('Upload error:', err);
     return res.status(400).json({
@@ -114,7 +115,7 @@ exports.handleUploadError = (err, req, res, next) => {
       message: err.message
     });
   }
-  
+
   next();
 };
 

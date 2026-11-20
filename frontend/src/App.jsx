@@ -1,3 +1,4 @@
+import { isDemo } from './services/demo.js';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -25,8 +26,10 @@ export default function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <ScrollToTop />
+      <a className="skip-link" href="#main-content" onClick={e=>{e.preventDefault();document.getElementById("main-content")?.focus();}}> Skip to content</a>
       <Navbar />
-      <main className="flex-grow-1">
+      <div className="prototype-notice" role="note"><strong>PORTFOLIO PREVIEW</strong><span>{isDemo ? 'No account, AI model, payments or messages. Pattern studies and moodboard changes stay in this page.' : 'Pattern generation and community are local prototypes. Account and material requests use your configured backend.'}</span></div>
+      <main tabIndex={-1} id="main-content" className="flex-grow-1">
         <AppRoutes />
       </main>
       {!hideFooter && <Footer />}

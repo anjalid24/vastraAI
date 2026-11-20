@@ -55,7 +55,7 @@ function BrandCards() {
     <>
       <div className="row g-4">
         <div className="col-sm-6 col-xl-3">
-          <StatCard icon="⚡" value="Unlimited" label="AI generations" hint="Brand plan" accent="indigo" to="/studio" cta="Generate" />
+          <StatCard icon="⚡" value="Local" label="Pattern studies" hint="Procedural SVG preview" accent="indigo" to="/studio" cta="Generate" />
         </div>
         <div className="col-sm-6 col-xl-3">
           <StatCard icon="🕑" value="0" label="Designs in history" accent="saffron" to="/studio" cta="Start creating" />
@@ -69,10 +69,10 @@ function BrandCards() {
       </div>
       <div className="row g-4 mt-1">
         <div className="col-lg-6">
-          <StatCard icon="🤝" label="Find artisans for your designs" hint="Marketplace" accent="emerald" to="/marketplace" cta="Meet makers" />
+          <StatCard icon="🤝" label="Browse fictional maker profiles" hint="Marketplace" accent="emerald" to="/marketplace" cta="Meet makers" />
         </div>
         <div className="col-lg-6">
-          <StatCard icon="⭐" label="Subscription status: active" hint="Brand" accent="saffron" to="/subscription" cta="Manage plan" />
+          <StatCard icon="⭐" label="Plans are not live" hint="Concept only" accent="saffron" to="/subscription" cta="Manage plan" />
         </div>
       </div>
     </>

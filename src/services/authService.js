@@ -14,7 +14,7 @@ exports.generateToken = (userId) => {
 // Verify JWT token
 exports.verifyToken = (token) => {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET);
+    return jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
   } catch (error) {
     return null;
   }
@@ -43,7 +43,7 @@ exports.generateResetToken = async (email) => {
 // Send password reset email
 exports.sendResetEmail = async (email, resetToken) => {
   try {
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: process.env.SMTP_SECURE === 'true' || false,
@@ -106,7 +106,7 @@ exports.sendResetEmail = async (email, resetToken) => {
 // Send welcome email
 exports.sendWelcomeEmail = async (user) => {
   try {
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: process.env.SMTP_SECURE === 'true' || false,
@@ -166,7 +166,7 @@ exports.sendVerificationEmail = async (user) => {
     user.verificationToken = verificationToken;
     await user.save();
 
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: process.env.SMTP_SECURE === 'true' || false,

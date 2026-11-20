@@ -17,6 +17,9 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password, phone, role } = req.body;
 
+    if (role && !['free', 'brand', 'artisan'].includes(role)) {
+      return res.status(400).json({ status: 'error', message: 'Choose a free, brand or artisan role' });
+    }
     // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -126,7 +129,7 @@ exports.login = async (req, res) => {
     if (!isPasswordMatch) {
       // Increment login attempts
       await user.incrementLoginAttempts();
-      
+
       const remainingAttempts = 5 - user.loginAttempts;
       return res.status(401).json({
         status: 'error',
@@ -334,20 +337,20 @@ exports.logout = async (req, res) => {
 exports.verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
-    
+
     const user = await User.findOne({ verificationToken: token });
-    
+
     if (!user) {
       return res.status(400).json({
         status: 'error',
         message: 'Invalid verification token'
       });
     }
-    
+
     user.emailVerified = true;
     user.verificationToken = undefined;
     await user.save();
-    
+
     res.status(200).json({
       status: 'success',
       message: 'Email verified successfully'

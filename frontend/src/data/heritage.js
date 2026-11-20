@@ -9,7 +9,7 @@ export const HERITAGE = {
   Bandhani: {
     slug: 'bandhani',
     tagline: 'Tie-and-dye artistry of Gujarat & Rajasthan',
-    image: '/images/bandhani.png',
+    image: '/images/bandhani.webp',
     history:
       'Bandhani (from Sanskrit "bandh", to tie) is a resist tie-dye craft dating back over 5,000 years, flourishing among the Khatri community of Gujarat and Rajasthan. Thousands of tiny knots are hand-tied before dyeing to form dotted motifs.',
     colors: [
@@ -24,7 +24,7 @@ export const HERITAGE = {
   Ikat: {
     slug: 'ikat',
     tagline: 'Resist-dyed yarns of Telangana & Odisha',
-    image: '/images/ikat.png',
+    image: '/images/ikat.webp',
     history:
       'Ikat is a dyeing technique where yarns are resist-dyed before weaving, creating the craft\'s signature feathered edges. India\'s Pochampally (Telangana) and Sambalpuri (Odisha) traditions are renowned worldwide.',
     colors: [
@@ -39,7 +39,7 @@ export const HERITAGE = {
   Patola: {
     slug: 'patola',
     tagline: 'Double-ikat silk royalty of Patan',
-    image: '/images/patola.png',
+    image: '/images/patola.webp',
     history:
       'Patola from Patan, Gujarat is a double-ikat silk woven by only a handful of families. Both warp and weft are resist-dyed with such precision that the pattern is identical on both faces — a single sari can take months to weave.',
     colors: [

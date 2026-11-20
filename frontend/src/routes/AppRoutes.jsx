@@ -1,3 +1,5 @@
+import { isDemo } from '../services/demo.js';
+import { Link } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from '../pages/Home/Home.jsx';
@@ -25,15 +27,15 @@ export default function AppRoutes() {
     <Routes>
       {/* Public */}
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={isDemo ? <DemoGate /> : <Login />} />
+      <Route path="/register" element={isDemo ? <DemoGate /> : <Register />} />
       <Route path="/community" element={<Community />} />
       <Route path="/encyclopedia" element={<Encyclopedia />} />
       <Route path="/encyclopedia/:slug" element={<EncyclopediaArticle />} />
       <Route path="/marketplace" element={<Marketplace />} />
       <Route path="/materials" element={<Materials />} />
       <Route path="/pricing" element={<Pricing />} />
-      <Route path="/subscription" element={<Subscription />} />
+      <Route path="/subscription" element={<DemoPlans />} />
 
       {/* Authenticated */}
       <Route
@@ -75,3 +77,6 @@ export default function AppRoutes() {
     </Routes>
   );
 }
+
+function DemoGate(){return <div className="container py-5"><h1>No account needed.</h1><p>This demo never collects a password or creates an account. Open the workshop and explore.</p><Link className="btn btn-primary" to="/studio">Open the workshop ↗</Link></div>;}
+function DemoPlans(){return <div className="container py-5"><p className="editorial-kicker">PROJECT CONCEPT</p><h1>Just here to explore.</h1><p>No subscription or payment is available. Pricing tiers in the original concept are not live offers.</p><Link to="/studio" className="btn btn-primary">Try the workshop ↗</Link></div>;}

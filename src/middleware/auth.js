@@ -24,8 +24,8 @@ exports.protect = async (req, res, next) => {
 
   try {
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
+
     // Get user from database
     const user = await User.findById(decoded.id).select('-password');
 
@@ -61,7 +61,7 @@ exports.protect = async (req, res, next) => {
         message: 'Token expired. Please login again.'
       });
     }
-    
+
     return res.status(401).json({
       status: 'error',
       message: 'Not authorized to access this route'
@@ -126,7 +126,7 @@ exports.optionalAuth = async (req, res, next) => {
 
   if (token) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
       const user = await User.findById(decoded.id).select('-password');
       if (user && user.isActive) {
         req.user = user;

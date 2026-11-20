@@ -9,9 +9,9 @@ const baseURL = import.meta.env.VITE_API_BASE_URL || '';
 const TOKEN_KEY = 'vastra_token';
 
 export const tokenStore = {
-  get: () => localStorage.getItem(TOKEN_KEY),
+  get: () => { try { return localStorage.getItem(TOKEN_KEY); } catch { return null; } },
   set: (t) => localStorage.setItem(TOKEN_KEY, t),
-  clear: () => localStorage.removeItem(TOKEN_KEY),
+  clear: () => { try { localStorage.removeItem(TOKEN_KEY); } catch {} },
 };
 
 const apiClient = axios.create({

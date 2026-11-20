@@ -40,9 +40,9 @@ export default function Community() {
       <PageHeader
         eyebrow="Community"
         deva="समुदाय"
-        title="Share your craft, celebrate the community"
-        lead="Post your designs, learn from artisans and brands, and keep India's textile traditions alive."
-        actions={<Button variant="primary" onClick={() => setShowCreate(true)}>＋ Create post</Button>}
+        title="A moodboard to play with"
+        lead="Fictional sample posts. Likes, comments and new posts stay in browser memory and clear on refresh. Nothing is sent to another person."
+        actions={<Button variant="primary" disabled={!posts} onClick={() => setShowCreate(true)}>＋ Create post</Button>}
       />
       <div className="container py-4" style={{ maxWidth: 720 }}>
         {!posts ? <Loader label="Loading feed…" /> : posts.map((p) => (
@@ -108,7 +108,7 @@ function PostCard({ post, onLike, onBookmark, onComment, canInteract }) {
         <ActionBtn active={post.bookmarkedByMe} onClick={() => canInteract && onBookmark(post.id)} disabled={!canInteract}>
           {post.bookmarkedByMe ? '🔖 Saved' : '🔖 Save'}
         </ActionBtn>
-        <ActionBtn className="ms-auto text-muted-2">⚑ Report</ActionBtn>
+        <span className="ms-auto small text-muted-2 align-self-center">Sample post</span>
       </div>
 
       {showComments && (
@@ -126,7 +126,7 @@ function PostCard({ post, onLike, onBookmark, onComment, canInteract }) {
           ))}
           {canInteract ? (
             <form onSubmit={submitComment} className="d-flex gap-2 mt-2">
-              <input className="form-control form-control-sm" placeholder="Add a comment…"
+              <input aria-label="Add a local comment" maxLength={2000} className="form-control form-control-sm" placeholder="Add a comment…"
                 value={commentText} onChange={(e) => setCommentText(e.target.value)} />
               <button className="btn btn-primary btn-sm" type="submit">Post</button>
             </form>
@@ -161,17 +161,17 @@ function CreatePostModal({ open, onClose, onSubmit, authed }) {
   };
 
   return (
-    <Modal open={open} onClose={onClose} title="Create a post" size="lg"
+    <Modal open={open} onClose={onClose} title="Create a local sample post" size="lg"
       footer={<>
         <Button variant="outline-primary" onClick={onClose}>Cancel</Button>
-        <Button variant="primary" onClick={submit} disabled={!authed}>Publish</Button>
+        <Button variant="primary" onClick={submit} disabled={!authed || !form.title.trim()}>Add to this preview</Button>
       </>}>
       {!authed ? (
         <p className="text-muted-2 mb-0">Please log in to share a post with the community.</p>
       ) : (
         <form onSubmit={submit}>
           <InputField label="Title" name="title" value={form.title} onChange={onChange}
-            placeholder="Give your post a title" required />
+            placeholder="Give your post a title" maxLength={160} required />
           <InputField as="textarea" label="Description" name="description" rows={4}
             value={form.description} onChange={onChange} placeholder="Tell the story behind your design…" />
           <InputField as="select" label="Category" name="category" value={form.category} onChange={onChange}>

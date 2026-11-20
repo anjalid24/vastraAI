@@ -1,3 +1,4 @@
+import { isDemo, demoUser } from '../services/demo.js';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import authService from '../services/authService.js';
 import { tokenStore } from '../services/apiClient.js';
@@ -10,10 +11,11 @@ const AuthContext = createContext(null);
  * refreshed page keeps the session (or clears a stale token silently).
  */
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [booting, setBooting] = useState(true);
+  const [user, setUser] = useState(isDemo ? demoUser : null);
+  const [booting, setBooting] = useState(!isDemo);
 
   useEffect(() => {
+    if (isDemo) return;
     let alive = true;
     (async () => {
       if (!tokenStore.get()) {

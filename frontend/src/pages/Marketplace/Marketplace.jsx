@@ -21,13 +21,13 @@ export default function Marketplace() {
       <PageHeader
         eyebrow="Artisan Marketplace"
         deva="कारीगर"
-        title="Commission India's master makers"
-        lead="Discover skilled artisans across the country and bring your AI designs to life on real handlooms."
+        title="Meet the sample maker profiles"
+        lead="Fictional profiles from the project concept. Names, ratings and experience are sample data, not verified people or offers."
       />
       <div className="container py-4">
         <div className="v-card p-3 mb-4 d-flex align-items-center gap-2">
           <span className="fs-5">🔍</span>
-          <input className="form-control border-0 shadow-none" placeholder="Search by name, craft or city…"
+          <input aria-label="Search sample makers" className="form-control border-0 shadow-none" placeholder="Search by name, craft or city…"
             value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
 
@@ -61,7 +61,7 @@ export default function Marketplace() {
                 <div className="small text-muted-2 mb-3">📍 {a.city}</div>
                 <div className="d-flex gap-2">
                   <Button variant="outline-primary" size="sm" onClick={() => setActive(a)}>View profile</Button>
-                  <Button variant="primary" size="sm" onClick={() => setActive(a)}>Contact</Button>
+                  <Button variant="primary" size="sm" onClick={() => setActive(a)}>Preview contact</Button>
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@ export default function Marketplace() {
       </div>
 
       <Modal open={!!active} onClose={() => setActive(null)} title={active?.name} size="md"
-        footer={<Button variant="primary" onClick={() => setActive(null)}>Send request</Button>}>
+        footer={<Button variant="primary" onClick={() => setActive(null)}>Close preview</Button>}>
         {active && (
           <>
             <div className="d-flex align-items-center gap-3 mb-3">
@@ -96,7 +96,7 @@ export default function Marketplace() {
               <span className="v-chip">{active.experience} years experience</span>
               <span className="v-chip v-chip-emerald">{active.portfolio} portfolio pieces</span>
             </div>
-            <p className="small text-muted-2 mt-3 mb-0">Contacting artisans is a preview — messaging goes live with the artisan module.</p>
+            <p className="small text-muted-2 mt-3 mb-0">Fictional profile preview. There is no contact request, booking or message sent.</p>
           </>
         )}
       </Modal>

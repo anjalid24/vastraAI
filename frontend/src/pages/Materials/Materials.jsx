@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import PageHeader from '../../components/common/PageHeader.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import materialService, { MATERIAL_CATEGORIES } from '../../services/materialService.js';
@@ -13,23 +13,19 @@ export default function Materials() {
   const [page, setPage] = useState(1);
   const [state, setState] = useState({ loading: true, error: '', data: null });
 
-  const load = useCallback(async () => {
-    setState((s) => ({ ...s, loading: true, error: '' }));
-    try {
-      const data = await materialService.list({
-        category: filters.category || undefined,
-        search: filters.search || undefined,
-        isAvailable: filters.available === '' ? undefined : filters.available === 'true',
-        page,
-        limit: 12,
-      });
-      setState({ loading: false, error: '', data });
-    } catch (err) {
-      setState({ loading: false, error: err.message, data: null });
-    }
+  const request = useRef(0);
+  useEffect(() => {
+    const id = ++request.current;
+    const timer = setTimeout(async () => {
+      setState(s => ({ ...s, loading: true, error: '' }));
+      try {
+        const data = await materialService.list({ category: filters.category || undefined,
+          search: filters.search || undefined, isAvailable: filters.available === '' ? undefined : filters.available === 'true', page, limit: 12 });
+        if(id === request.current) setState({ loading: false, error: '', data });
+      } catch(err) { if(id === request.current) setState({ loading: false, error: err.message, data: null }); }
+    }, 180);
+    return () => { clearTimeout(timer); request.current++; };
   }, [filters, page]);
-
-  useEffect(() => { load(); }, [load]);
 
   const onFilter = (patch) => { setPage(1); setFilters((f) => ({ ...f, ...patch })); };
 
@@ -41,7 +37,7 @@ export default function Materials() {
         eyebrow="Material Explorer"
         deva="सामग्री"
         title="Find the right fabric"
-        lead="Browse the live materials catalogue — filter by category, availability and name."
+        lead="Browse sample fabrics in demo mode, or your configured server catalogue. Prices and stock in the demo are fictional."
       />
       <div className="container py-4">
         {/* Filters */}
@@ -49,13 +45,13 @@ export default function Materials() {
           <div className="row g-2 align-items-end">
             <div className="col-md-4">
               <label className="form-label small fw-semibold mb-1">Search</label>
-              <input className="form-control" placeholder="Search by name…"
+              <input aria-label="Search materials" className="form-control" placeholder="Search by name…"
                 value={filters.search}
                 onChange={(e) => onFilter({ search: e.target.value })} />
             </div>
             <div className="col-md-4">
               <label className="form-label small fw-semibold mb-1">Category</label>
-              <select className="form-select" value={filters.category}
+              <select aria-label="Material category" className="form-select" value={filters.category}
                 onChange={(e) => onFilter({ category: e.target.value })}>
                 <option value="">All categories</option>
                 {MATERIAL_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -63,7 +59,7 @@ export default function Materials() {
             </div>
             <div className="col-md-4">
               <label className="form-label small fw-semibold mb-1">Availability</label>
-              <select className="form-select" value={filters.available}
+              <select aria-label="Material availability" className="form-select" value={filters.available}
                 onChange={(e) => onFilter({ available: e.target.value })}>
                 <option value="">Any</option>
                 <option value="true">In stock</option>

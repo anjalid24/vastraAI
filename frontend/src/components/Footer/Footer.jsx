@@ -42,8 +42,7 @@ export default function Footer() {
               वस्त्र · कारीगर · परंपरा
             </div>
             <p className="mb-3" style={{ maxWidth: 320, color: '#b9ab92' }}>
-              AI-powered textile design that preserves India's heritage crafts —
-              connecting brands, artisans and living traditions.
+              A portfolio exploration of craft-inspired pattern design. Procedural studies, sample people and no live purchases.
             </p>
             <div className="v-thread-line" />
           </div>
@@ -73,9 +72,9 @@ export default function Footer() {
         <hr className="border-secondary my-4" />
         <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
           <span className="text-white-50 small">
-            © {new Date().getFullYear()} Vastra AI. Crafted with heritage in mind.
+            © {new Date().getFullYear()} Vastra AI. Portfolio prototype.
           </span>
-          <span className="text-white-50 small">Made for India's weavers 🧵</span>
+          <span className="text-white-50 small">A learning project by Anjali Dubey</span>
         </div>
       </div>
     </footer>

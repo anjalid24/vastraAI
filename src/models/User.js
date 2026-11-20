@@ -98,7 +98,7 @@ const userSchema = new mongoose.Schema({
 // Encrypt password before saving
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {
-    next();
+    return next();
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
@@ -115,19 +115,19 @@ userSchema.methods.canGenerateDesign = function() {
   if (this.role === 'brand' || this.role === 'admin') {
     return true;
   }
-  
+
   // Check if monthly limit reset is needed
   const now = new Date();
   const lastReset = new Date(this.lastReset);
-  const monthDiff = now.getMonth() - lastReset.getMonth() + 
+  const monthDiff = now.getMonth() - lastReset.getMonth() +
     (12 * (now.getFullYear() - lastReset.getFullYear()));
-  
+
   if (monthDiff >= 1) {
     this.generationCount = 0;
     this.lastReset = now;
     return true;
   }
-  
+
   // Free users get 1 generation per month
   return this.generationCount < 1;
 };
@@ -151,7 +151,7 @@ userSchema.methods.incrementLoginAttempts = async function() {
     this.lockUntil = undefined;
   } else {
     this.loginAttempts += 1;
-    
+
     // Lock account after 5 failed attempts
     if (this.loginAttempts >= 5) {
       this.lockUntil = Date.now() + 30 * 60 * 1000; // Lock for 30 minutes

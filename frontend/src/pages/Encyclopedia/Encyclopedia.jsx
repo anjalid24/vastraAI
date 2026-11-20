@@ -21,12 +21,12 @@ export default function Encyclopedia() {
         eyebrow="Textile Encyclopedia"
         deva="ज्ञानकोश"
         title="The stories woven into every craft"
-        lead="Explore the history, technique, materials and motifs behind India's living textile traditions."
+        lead="Introductory project notes about textile techniques. These summaries are not authenticity or provenance advice."
       />
       <div className="container py-4">
         <div className="v-card p-3 mb-4 d-flex align-items-center gap-2">
           <span className="fs-5">🔍</span>
-          <input className="form-control border-0 shadow-none" placeholder="Search crafts, regions, materials…"
+          <input aria-label="Search craft notes" className="form-control border-0 shadow-none" placeholder="Search crafts, regions, materials…"
             value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
 

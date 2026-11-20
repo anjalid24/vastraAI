@@ -23,7 +23,9 @@ export const formatDate = (iso) => {
 // "2 days ago" style relative time for feed/comments.
 export const timeAgo = (iso) => {
   if (!iso) return '';
-  const diff = Date.now() - new Date(iso).getTime();
+  const time = new Date(iso).getTime();
+  if (!Number.isFinite(time)) return "";
+  const diff = Math.max(0, Date.now() - time);
   const mins = Math.round(diff / 60000);
   if (mins < 1) return 'just now';
   if (mins < 60) return `${mins}m ago`;

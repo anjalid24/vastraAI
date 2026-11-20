@@ -5,8 +5,9 @@ const logger = require('../middleware/logger');
 // Get all materials
 exports.getAllMaterials = async (req, res) => {
   try {
-    const { category, search } = req.query;
-    const filter = { availability: true };
+    const { category, search, isAvailable } = req.query;
+    const filter = {};
+    if (isAvailable === 'true' || isAvailable === 'false') filter.availability = isAvailable === 'true';
 
     if (category) filter.category = category;
     if (search) {

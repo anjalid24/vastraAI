@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../../components/common/PageHeader.jsx';
 import { PATTERNS } from '../../data/heritage.js';
 import { SHIPPING_ZONES } from '../../utils/constants.js';
@@ -7,7 +8,7 @@ import { formatINR } from '../../utils/formatters.js';
 // Base fabric rates (₹/metre) used by the estimator — placeholder until the
 // live materials catalogue feeds these in.
 const FABRIC_RATES = { Silk: 1200, Cotton: 320, Georgette: 540, Linen: 650, Wool: 780 };
-const GST_RATE = 0.05; // 5% GST on textiles
+const GST_RATE = 0.05; // Illustrative sample rate, not current tax guidance.
 
 export default function Pricing() {
   const [input, setInput] = useState({
@@ -34,7 +35,7 @@ export default function Pricing() {
         eyebrow="Pricing Calculator"
         deva="मूल्य"
         title="Estimate your design cost"
-        lead="Get a transparent breakdown — material, design, artisan, shipping and GST — before you commit."
+        lead="A fictional cost exercise. All rates, shipping and the sample 5% tax are illustrative, not quotes or current tax guidance. No order can be placed."
       />
       <div className="container py-4">
         <div className="row g-4">
@@ -79,7 +80,7 @@ export default function Pricing() {
               <Row label="Design charge" value={estimate.designCharge} />
               <Row label="Artisan charge" value={estimate.artisanCharge} />
               <Row label="Shipping" value={estimate.shipping} />
-              <Row label="GST (5%)" value={estimate.gst} />
+              <Row label="Sample tax (5%)" value={estimate.gst} />
               <hr />
               <div className="d-flex justify-content-between align-items-center">
                 <span className="fw-bold fs-5">Total estimate</span>
@@ -88,9 +89,9 @@ export default function Pricing() {
                 </span>
               </div>
               <p className="small text-muted-2 mt-3 mb-0">
-                Indicative only. Final pricing depends on the artisan, finishing and live material rates.
+                This arithmetic is a sample, not an offer. There are no live artisans, inventory or purchasing in this preview.
               </p>
-              <a href="/marketplace" className="btn btn-primary mt-auto">Find an artisan to produce this</a>
+              <Link to="/marketplace" className="btn btn-primary mt-auto">Browse sample maker profiles</Link>
             </div>
           </div>
         </div>

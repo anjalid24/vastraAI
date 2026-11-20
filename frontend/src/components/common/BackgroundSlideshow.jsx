@@ -6,10 +6,10 @@ import { useState, useEffect } from 'react';
  */
 export default function BackgroundSlideshow({
   images = [
-    '/images/bandhani.png',
-    '/images/ikat.png',
-    '/images/patola.png',
-    '/images/hero_generated.png',
+    '/images/bandhani.webp',
+    '/images/ikat.webp',
+    '/images/patola.webp',
+    '/images/hero_generated.webp',
   ],
   labels = ['Bandhani Silk', 'Sambalpuri Ikat', 'Patan Patola', 'AI Fusion Weave'],
   interval = 4000,

@@ -2,7 +2,7 @@ import apiClient, { tokenStore } from './apiClient.js';
 
 /**
  * Auth service — thin wrappers over the backend's /api/auth endpoints.
- * The backend returns: { success, message, data: { user, token } }.
+ * The backend returns: { status, token, data: { user } }.
  */
 const authService = {
   // role must be 'brand' or 'artisan' (SIGNUP_ROLES); omit to use the
@@ -10,15 +10,19 @@ const authService = {
   async register({ name, email, password, role }) {
     const body = { name, email, password };
     if (role) body.role = role;
-    const { data } = await apiClient.post('/api/auth/signup', body);
-    const { user, token } = data.data;
+    const { data } = await apiClient.post('/api/auth/register', body);
+    const user = data.data.user;
+    const token = data.token;
+    if (!token || !user) throw new Error("The server returned an incomplete session.");
     tokenStore.set(token);
     return { user, token };
   },
 
   async login({ email, password }) {
     const { data } = await apiClient.post('/api/auth/login', { email, password });
-    const { user, token } = data.data;
+    const user = data.data.user;
+    const token = data.token;
+    if (!token || !user) throw new Error("The server returned an incomplete session.");
     tokenStore.set(token);
     return { user, token };
   },
