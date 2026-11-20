@@ -109,3 +109,75 @@ test("Cloudinary storage imports configured v2 client without making a request",
   );
   assert.equal(typeof upload.uploadSingle, "function");
 });
+
+test("Multer 2 streams multipart bytes through existing Cloudinary adapter", async () => {
+  const express = require("express");
+  const { Writable } = require("node:stream");
+  const cloudinary = require("../src/config/cloudinary").cloudinary;
+  const original = cloudinary.uploader.upload_stream;
+  let size = 0;
+  cloudinary.uploader.upload_stream = (options, callback) =>
+    new Writable({
+      write(chunk, encoding, next) {
+        size += chunk.length;
+        next();
+      },
+      final(next) {
+        callback(null, {
+          public_id: "sample-test",
+          secure_url: "https://example.invalid/sample.png",
+          bytes: size,
+        });
+        next();
+      },
+    });
+  const app = express();
+  app.post("/upload", upload.uploadSingle, (req, res) =>
+    res.json({ size: req.file.size }),
+  );
+  app.use(upload.handleUploadError);
+  const server = app.listen(0, "127.0.0.1");
+  await new Promise((r) => server.once("listening", r));
+  try {
+    const body = new FormData();
+    body.append(
+      "image",
+      new Blob(["sample-image-bytes"], { type: "image/png" }),
+      "sample.png",
+    );
+    const res = await fetch(
+      `http://127.0.0.1:${server.address().port}/upload`,
+      { method: "POST", body },
+    );
+    assert.equal(res.status, 200);
+    assert.equal((await res.json()).size, 18);
+    assert.equal(size, 18);
+  } finally {
+    await new Promise((r) => server.close(r));
+    cloudinary.uploader.upload_stream = original;
+  }
+});
+test("SVG multipart uploads are rejected before a storage service is called", async () => {
+  const express = require("express");
+  const app = express();
+  app.post("/upload", upload.uploadSingle, (req, res) => res.sendStatus(200));
+  app.use(upload.handleUploadError);
+  const server = app.listen(0, "127.0.0.1");
+  await new Promise((r) => server.once("listening", r));
+  try {
+    const body = new FormData();
+    body.append(
+      "image",
+      new Blob(["<svg/>"], { type: "image/svg+xml" }),
+      "sample.svg",
+    );
+    const res = await fetch(
+      `http://127.0.0.1:${server.address().port}/upload`,
+      { method: "POST", body },
+    );
+    assert.equal(res.status, 400);
+    assert.match((await res.json()).message, /Invalid file type/);
+  } finally {
+    await new Promise((r) => server.close(r));
+  }
+});
